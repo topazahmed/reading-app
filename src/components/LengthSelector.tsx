@@ -14,7 +14,7 @@ const LengthSelector: React.FC<LengthSelectorProps> = ({
 }) => {
   return (
     <div className="length-selector">
-      <h3 className="selector-title">🌈 Choose your word size! 📏</h3>
+      <h3 className="selector-title">📝 Choose your word size! 🎓</h3>
       <div className="length-buttons">
         {availableLengths.map((length) => (
           <button

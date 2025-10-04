@@ -80,7 +80,8 @@ function App() {
   return (
     <div className="App">
       <div className="app-title">
-        <h1>🌟 Mr. Pintu Pant is learning to read! 📚</h1>
+        <h1>Mr. Pintu Pant</h1>
+        <h1>Learning words</h1>
       </div>
 
       <main className="App-main">

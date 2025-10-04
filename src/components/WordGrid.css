@@ -23,7 +23,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
 /* Enhanced mobile responsiveness */
@@ -38,7 +38,7 @@
   .words-container {
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 15px 0;
+    padding: 30px 0;
   }
   
   .word-grid-empty {
@@ -124,7 +124,7 @@
   .words-container {
     grid-template-columns: 1fr;
     gap: 10px;
-    padding: 12px 0;
+    padding: 25px 0;
   }
   
   .word-grid-empty {
@@ -142,7 +142,7 @@
   .words-container {
     grid-template-columns: 1fr;
     gap: 8px;
-    padding: 10px 0;
+    padding: 20px 0;
   }
   
   .word-grid-empty {
