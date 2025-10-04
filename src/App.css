@@ -1,0 +1,206 @@
+/* Import Google Fonts for kid-friendly typography */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%);
+  color: #333;
+  font-family: 'Comic Neue', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  overflow-x: hidden;
+}
+
+.app-title {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.app-title h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  margin: 0;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.audio-warning {
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 2px solid #fd79a8;
+  color: #856404;
+  padding: 12px 20px;
+  border-radius: 15px;
+  margin: 15px auto 20px auto;
+  max-width: 500px;
+  font-weight: 600;
+  font-family: 'Comic Neue', cursive;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.App-main {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.new-words-section {
+  text-align: center;
+  margin: 30px 0 20px 0;
+}
+
+.new-words-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 16px 32px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Comic Neue', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 200px;
+}
+
+.new-words-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #ff5252 0%, #26a69a 50%, #2196f3 100%);
+}
+
+.new-words-button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.App-footer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.8));
+  padding: 20px;
+  margin-top: 40px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px 20px 0 0;
+}
+
+.App-footer p {
+  margin: 0;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 600;
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .app-title {
+    padding: 15px;
+  }
+  
+  .app-title h1 {
+    font-size: 2.3rem;
+  }
+  
+  .App-main {
+    padding: 15px;
+  }
+  
+  .new-words-section {
+    margin: 25px 0 18px 0;
+  }
+  
+  .new-words-button {
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    min-width: 180px;
+  }
+  
+  .App-footer {
+    padding: 18px 15px;
+  }
+  
+  .App-footer p {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    padding: 12px;
+  }
+  
+  .app-title h1 {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .App-main {
+    padding: 12px;
+  }
+  
+  .new-words-section {
+    margin: 20px 0 15px 0;
+  }
+  
+  .new-words-button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    min-width: 160px;
+  }
+  
+  .App-footer {
+    padding: 16px 12px;
+  }
+  
+  .App-footer p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-title h1 {
+    font-size: 1.8rem;
+  }
+  
+  .new-words-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    min-width: 140px;
+  }
+  
+  .audio-warning {
+    padding: 10px 15px;
+    margin: 12px auto 15px auto;
+    font-size: 0.9rem;
+  }
+}
+
+/* Touch device optimizations for new words button */
+@media (hover: none) and (pointer: coarse) {
+  .new-words-button:hover {
+    transform: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  }
+  
+  .new-words-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  }
+}

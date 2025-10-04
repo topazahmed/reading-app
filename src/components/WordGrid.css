@@ -1,0 +1,160 @@
+.word-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.word-grid-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #4a4a4a;
+  font-size: 1.2rem;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.7));
+  border: 3px dashed #ff6b6b;
+  border-radius: 20px;
+  margin: 20px 0;
+  line-height: 1.5;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.words-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 1024px) {
+  .words-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 15px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 35px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 30px 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 25px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 1024px) {
+  .words-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-header {
+    margin-bottom: 20px;
+  }
+  
+  .grid-header h3 {
+    font-size: 1.25rem;
+    padding: 0 15px;
+  }
+  
+  .word-count {
+    font-size: 0.95rem;
+  }
+  
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 15px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 35px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-header {
+    margin-bottom: 18px;
+  }
+  
+  .grid-header h3 {
+    font-size: 1.2rem;
+    padding: 0 10px;
+  }
+  
+  .word-count {
+    font-size: 0.9rem;
+  }
+  
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 30px 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .grid-header h3 {
+    font-size: 1.15rem;
+    padding: 0 8px;
+  }
+  
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 0;
+  }
+  
+  .word-grid-empty {
+    padding: 25px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Ensure minimum 2 columns on very small screens */
+@media (max-width: 320px) {
+  .words-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
