@@ -54,15 +54,24 @@
   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
   line-height: 1.2;
   letter-spacing: 1px;
+  position: relative;
 }
 
 .learning-text {
   margin-right: 8px;
 }
 
+.dropdown-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .mode-dropdown-header {
   background: transparent;
-  border: none;
+  border: 3px solid rgba(255, 107, 107, 0.3);
+  border-radius: 12px;
+  padding: 8px 35px 8px 12px;
   font-family: 'Fredoka One', cursive;
   font-size: 2.8rem;
   font-weight: 400;
@@ -75,7 +84,6 @@
   cursor: pointer;
   outline: none;
   letter-spacing: 1px;
-  padding: 0;
   margin: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -83,6 +91,21 @@
   position: relative;
   pointer-events: auto;
   z-index: 10;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
 }
 
 .mode-dropdown-header::-ms-expand {
@@ -98,13 +121,19 @@
 }
 
 .mode-dropdown-header:hover {
-  opacity: 0.8;
+  border-color: rgba(255, 107, 107, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
 }
 
 .mode-dropdown-header:focus {
-  outline: 2px solid rgba(255, 107, 107, 0.5);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: none;
+  border-color: rgba(255, 107, 107, 0.8);
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+.dropdown-container:hover .dropdown-arrow {
+  transform: translateY(-50%) scale(1.1);
 }
 
 .audio-warning {
@@ -193,6 +222,12 @@
   
   .mode-dropdown-header {
     font-size: 2.3rem;
+    padding: 6px 30px 6px 10px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1.3rem;
+    right: 10px;
   }
   
   .App-main {
@@ -236,6 +271,12 @@
   .mode-dropdown-header {
     font-size: 2rem;
     letter-spacing: 0.5px;
+    padding: 5px 25px 5px 8px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1.1rem;
+    right: 8px;
   }
   
   .App-main {
@@ -272,6 +313,12 @@
   
   .mode-dropdown-header {
     font-size: 1.8rem;
+    padding: 4px 22px 4px 6px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1rem;
+    right: 6px;
   }
   
   .new-words-button {

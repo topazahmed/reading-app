@@ -204,18 +204,21 @@ function App() {
         <h1>Mr. Pintu Pant</h1>
         <div className="learning-mode-header">
           <span className="learning-text">Learning </span>
-          <select
-            className="mode-dropdown-header"
-            value={currentMode}
-            onChange={(e) => {
-              const newMode = e.target.value as 'words' | 'math';
-              console.log('Dropdown changed to:', newMode); // Debug log
-              handleModeChange(newMode);
-            }}
-          >
-            <option value="words">words</option>
-            <option value="math">math</option>
-          </select>
+          <div className="dropdown-container">
+            <select
+              className="mode-dropdown-header"
+              value={currentMode}
+              onChange={(e) => {
+                const newMode = e.target.value as 'words' | 'math';
+                console.log('Dropdown changed to:', newMode); // Debug log
+                handleModeChange(newMode);
+              }}
+            >
+              <option value="words">words</option>
+              <option value="math">math</option>
+            </select>
+            <span className="dropdown-arrow">▼</span>
+          </div>
         </div>
       </div>
 

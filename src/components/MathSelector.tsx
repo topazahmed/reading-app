@@ -17,13 +17,18 @@ const MathSelector: React.FC<MathSelectorProps> = ({
   onDifficultyChange,
   onOperationChange
 }) => {
-  const difficulties: MathDifficulty[] = ['easy', 'normal', 'hard', 'master'];
+  const difficulties: { value: MathDifficulty; label: string; emoji: string }[] = [
+    { value: 'easy', label: 'Easy', emoji: '🐞' },
+    { value: 'normal', label: 'Normal', emoji: '🐥' },
+    { value: 'hard', label: 'Hard', emoji: '🐻' },
+    { value: 'master', label: 'Master', emoji: '🐉' }
+  ];
   const operations: { value: MathOperation; label: string; emoji: string }[] = [
-    { value: '+', label: 'Addition', emoji: '➕' },
-    { value: '-', label: 'Subtraction', emoji: '➖' },
-    { value: '×', label: 'Multiplication', emoji: '✖️' },
-    { value: '÷', label: 'Division', emoji: '➗' },
-    { value: 'all', label: 'All Operations', emoji: '🔢' }
+    { value: '+', label: '', emoji: '➕' },
+    { value: '-', label: '', emoji: '➖' },
+    { value: '×', label: '', emoji: '✖️' },
+    { value: '÷', label: '', emoji: '➗' },
+    { value: 'all', label: '', emoji: '🔢' }
   ];
 
   return (
@@ -33,11 +38,12 @@ const MathSelector: React.FC<MathSelectorProps> = ({
         <div className="difficulty-buttons">
           {difficulties.map((difficulty) => (
             <button
-              key={difficulty}
-              className={`difficulty-button ${selectedDifficulty === difficulty ? 'active' : ''}`}
-              onClick={() => onDifficultyChange(difficulty)}
+              key={difficulty.value}
+              className={`difficulty-button ${selectedDifficulty === difficulty.value ? 'active' : ''}`}
+              onClick={() => onDifficultyChange(difficulty.value)}
             >
-              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+              <span className="difficulty-emoji">{difficulty.emoji}</span>
+              <span className="difficulty-text">{difficulty.label}</span>
             </button>
           ))}
         </div>
@@ -51,10 +57,9 @@ const MathSelector: React.FC<MathSelectorProps> = ({
               key={operation.value}
               className={`operation-button ${selectedOperation === operation.value ? 'active' : ''}`}
               onClick={() => onOperationChange(operation.value)}
-              title={operation.label}
+              title={operation.value === 'all' ? 'All Operations' : operation.value}
             >
               <span className="operation-emoji">{operation.emoji}</span>
-              <span className="operation-symbol">{operation.value}</span>
             </button>
           ))}
         </div>

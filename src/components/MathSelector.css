@@ -28,7 +28,7 @@
 }
 
 .difficulty-button {
-  padding: 12px 20px;
+  padding: 15px 20px;
   border: 3px solid #ddd;
   border-radius: 15px;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -39,8 +39,22 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  min-width: 90px;
+  min-width: 110px;
   text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.difficulty-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.difficulty-text {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .difficulty-button:hover {
@@ -59,13 +73,13 @@
 
 .operation-buttons {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .operation-button {
-  padding: 15px;
+  padding: 18px 15px;
   border: 3px solid #ddd;
   border-radius: 20px;
   background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
@@ -77,19 +91,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
   min-width: 80px;
   min-height: 80px;
+  max-width: 120px;
 }
 
 .operation-emoji {
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .operation-symbol {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.1;
 }
 
 .operation-button:hover {
@@ -121,27 +140,32 @@
   }
   
   .difficulty-button {
-    padding: 10px 16px;
+    padding: 12px 16px;
     font-size: 0.95rem;
-    min-width: 80px;
+    min-width: 95px;
   }
   
-  .operation-buttons {
-    gap: 12px;
-  }
-  
-  .operation-button {
-    padding: 12px;
-    min-width: 70px;
-    min-height: 70px;
-  }
-  
-  .operation-emoji {
+  .difficulty-emoji {
     font-size: 1.5rem;
   }
   
-  .operation-symbol {
-    font-size: 1.1rem;
+  .difficulty-text {
+    font-size: 0.9rem;
+  }
+  
+  .operation-buttons {
+    gap: 8px;
+  }
+  
+  .operation-button {
+    padding: 15px 12px;
+    min-width: 65px;
+    min-height: 65px;
+    max-width: 90px;
+  }
+  
+  .operation-emoji {
+    font-size: 1.7rem;
   }
 }
 
@@ -152,22 +176,44 @@
   }
   
   .difficulty-button {
-    padding: 8px 12px;
+    padding: 10px 12px;
     font-size: 0.9rem;
-    min-width: 70px;
+    min-width: 80px;
+  }
+  
+  .difficulty-emoji {
+    font-size: 1.3rem;
+  }
+  
+  .difficulty-text {
+    font-size: 0.8rem;
   }
   
   .operation-button {
-    padding: 10px;
-    min-width: 60px;
-    min-height: 60px;
+    padding: 12px 8px;
+    min-width: 55px;
+    min-height: 55px;
+    max-width: 75px;
+  }
+  
+  .operation-emoji {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .operation-buttons {
+    gap: 4px;
+  }
+  
+  .operation-button {
+    padding: 10px 6px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 65px;
   }
   
   .operation-emoji {
     font-size: 1.3rem;
-  }
-  
-  .operation-symbol {
-    font-size: 1rem;
   }
 }
