@@ -37,6 +37,76 @@
   100% { background-position: 0% 50%; }
 }
 
+.learning-mode-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  margin: 0;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.learning-text {
+  margin-right: 8px;
+}
+
+.mode-dropdown-header {
+  background: transparent;
+  border: none;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 1px;
+  padding: 0;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.mode-dropdown-header::-ms-expand {
+  display: none;
+}
+
+.mode-dropdown-header option {
+  background: white;
+  color: #333;
+  font-family: 'Comic Neue', cursive;
+  font-size: 1rem;
+  padding: 8px 12px;
+}
+
+.mode-dropdown-header:hover {
+  opacity: 0.8;
+}
+
+.mode-dropdown-header:focus {
+  outline: 2px solid rgba(255, 107, 107, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .audio-warning {
   background: linear-gradient(135deg, #fff3cd, #ffeaa7);
   border: 2px solid #fd79a8;
@@ -117,6 +187,14 @@
     font-size: 2.3rem;
   }
   
+  .learning-mode-header {
+    font-size: 2.3rem;
+  }
+  
+  .mode-dropdown-header {
+    font-size: 2.3rem;
+  }
+  
   .App-main {
     padding: 15px;
   }
@@ -150,6 +228,16 @@
     letter-spacing: 0.5px;
   }
   
+  .learning-mode-header {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .mode-dropdown-header {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  
   .App-main {
     padding: 12px;
   }
@@ -175,6 +263,14 @@
 
 @media (max-width: 360px) {
   .app-title h1 {
+    font-size: 1.8rem;
+  }
+  
+  .learning-mode-header {
+    font-size: 1.8rem;
+  }
+  
+  .mode-dropdown-header {
     font-size: 1.8rem;
   }
   

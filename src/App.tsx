@@ -2,16 +2,72 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import LengthSelector from './components/LengthSelector';
 import WordGrid from './components/WordGrid';
+import MathSelector, { MathDifficulty, MathOperation } from './components/MathSelector';
+import MathGrid from './components/MathGrid';
 import { wordsByLength, getRandomWords } from './data/words';
 import { speakWord, speakLetter, isAudioSupported } from './utils/audio';
+import { generateMathProblems, speakNumber, speakMathSolution } from './utils/math';
+import { MathProblem } from './components/MathCard';
 
 function App() {
+  // Mode state
+  const [currentMode, setCurrentMode] = useState<'words' | 'math'>('words');
+  
+  // Words mode state
   const [selectedLength, setSelectedLength] = useState<number>(4);
   const [currentWords, setCurrentWords] = useState<string[]>([]);
   const [currentPlayingWord, setCurrentPlayingWord] = useState<string>('');
+  
+  // Math mode state
+  const [mathDifficulty, setMathDifficulty] = useState<MathDifficulty>('easy');
+  const [mathOperation, setMathOperation] = useState<MathOperation>('+');
+  const [mathProblems, setMathProblems] = useState<MathProblem[]>([]);
+  const [solvedProblems, setSolvedProblems] = useState<Set<string>>(new Set());
+  
+  // Common state
   const [audioSupported, setAudioSupported] = useState<boolean>(true);
 
   const availableLengths = Object.keys(wordsByLength).map(Number).sort((a, b) => a - b);
+
+  // Handle URL hash for mode switching
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove the '#'
+      if (hash === 'math') {
+        setCurrentMode('math');
+      } else {
+        setCurrentMode('words');
+      }
+    };
+
+    // Set initial mode based on URL hash
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+  // Update URL hash when mode changes
+  const handleModeChange = (mode: 'words' | 'math') => {
+    console.log('Mode changing to:', mode); // Debug log
+    setCurrentMode(mode);
+    window.location.hash = mode === 'math' ? 'math' : '';
+    
+    // Reset state when switching modes
+    if (mode === 'words') {
+      setCurrentPlayingWord('');
+      const words = getRandomWords(selectedLength, 10);
+      setCurrentWords(words);
+    } else {
+      setSolvedProblems(new Set());
+      const problems = generateMathProblems(mathDifficulty, mathOperation, 10);
+      setMathProblems(problems);
+    }
+  };
 
   useEffect(() => {
     setAudioSupported(isAudioSupported());
@@ -34,10 +90,22 @@ function App() {
     }
   }, []);
 
+  // Generate words when length changes (words mode)
   useEffect(() => {
-    const words = getRandomWords(selectedLength, 10);
-    setCurrentWords(words);
-  }, [selectedLength]);
+    if (currentMode === 'words') {
+      const words = getRandomWords(selectedLength, 10);
+      setCurrentWords(words);
+    }
+  }, [selectedLength, currentMode]);
+
+  // Generate math problems when difficulty or operation changes (math mode)
+  useEffect(() => {
+    if (currentMode === 'math') {
+      const problems = generateMathProblems(mathDifficulty, mathOperation, 10);
+      setMathProblems(problems);
+      setSolvedProblems(new Set()); // Reset solved problems
+    }
+  }, [mathDifficulty, mathOperation, currentMode]);
 
   const handleLengthChange = (length: number) => {
     setSelectedLength(length);
@@ -77,11 +145,78 @@ function App() {
     setCurrentPlayingWord('');
   };
 
+  // Math mode handlers
+  const handleMathDifficultyChange = (difficulty: MathDifficulty) => {
+    setMathDifficulty(difficulty);
+  };
+
+  const handleMathOperationChange = (operation: MathOperation) => {
+    setMathOperation(operation);
+  };
+
+  const handleNumberSpeak = (number: number) => {
+    if (!audioSupported) {
+      alert('Audio is not supported in your browser');
+      return;
+    }
+
+    speakNumber(number);
+  };
+
+  const getProblemKey = (problem: MathProblem) => {
+    return `${problem.num1}-${problem.operation}-${problem.num2}`;
+  };
+
+  const handleMathSolve = (problem: MathProblem) => {
+    const problemKey = getProblemKey(problem);
+    
+    if (solvedProblems.has(problemKey)) {
+      // Generate a new problem of the same type
+      const newProblems = generateMathProblems(mathDifficulty, mathOperation, 10);
+      setMathProblems(newProblems);
+      setSolvedProblems(new Set());
+    } else {
+      // Show solution and speak it
+      setSolvedProblems(prev => {
+        const newSet = new Set(prev);
+        newSet.add(problemKey);
+        return newSet;
+      });
+      
+      if (audioSupported) {
+        // Delay speaking the solution slightly for better UX
+        setTimeout(() => {
+          speakMathSolution(problem);
+        }, 200);
+      }
+    }
+  };
+
+  const handleGetNewMathProblems = () => {
+    const problems = generateMathProblems(mathDifficulty, mathOperation, 10);
+    setMathProblems(problems);
+    setSolvedProblems(new Set());
+  };
+
   return (
     <div className="App">
       <div className="app-title">
         <h1>Mr. Pintu Pant</h1>
-        <h1>Learning words</h1>
+        <div className="learning-mode-header">
+          <span className="learning-text">Learning </span>
+          <select
+            className="mode-dropdown-header"
+            value={currentMode}
+            onChange={(e) => {
+              const newMode = e.target.value as 'words' | 'math';
+              console.log('Dropdown changed to:', newMode); // Debug log
+              handleModeChange(newMode);
+            }}
+          >
+            <option value="words">words</option>
+            <option value="math">math</option>
+          </select>
+        </div>
       </div>
 
       <main className="App-main">
@@ -91,28 +226,54 @@ function App() {
           </div>
         )}
 
-        <LengthSelector
-          selectedLength={selectedLength}
-          onLengthChange={handleLengthChange}
-          availableLengths={availableLengths}
-        />
+        {currentMode === 'words' ? (
+          <>
+            <LengthSelector
+              selectedLength={selectedLength}
+              onLengthChange={handleLengthChange}
+              availableLengths={availableLengths}
+            />
 
-        <WordGrid
-          words={currentWords}
-          onWordSpeak={handleWordSpeak}
-          onLetterSpeak={handleLetterSpeak}
-          currentPlayingWord={currentPlayingWord}
-        />
+            <WordGrid
+              words={currentWords}
+              onWordSpeak={handleWordSpeak}
+              onLetterSpeak={handleLetterSpeak}
+              currentPlayingWord={currentPlayingWord}
+            />
 
-        <div className="new-words-section">
-          <button className="new-words-button" onClick={handleGetNewWords}>
-            🔄 Get New Words! 🎉
-          </button>
-        </div>
+            <div className="new-words-section">
+              <button className="new-words-button" onClick={handleGetNewWords}>
+                🔄 Get New Words! 🎉
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <MathSelector
+              selectedDifficulty={mathDifficulty}
+              selectedOperation={mathOperation}
+              onDifficultyChange={handleMathDifficultyChange}
+              onOperationChange={handleMathOperationChange}
+            />
+
+            <MathGrid
+              problems={mathProblems}
+              onNumberSpeak={handleNumberSpeak}
+              onSolve={handleMathSolve}
+              solvedProblems={solvedProblems}
+            />
+
+            <div className="new-words-section">
+              <button className="new-words-button" onClick={handleGetNewMathProblems}>
+                🔄 Get New Problems! 🎉
+              </button>
+            </div>
+          </>
+        )}
       </main>
 
       <footer className="App-footer">
-        <p>🎉 Click on words to hear them and learn new ones! Keep practicing, Mr. Pintu Pant! �</p>
+        <p>🎉 Keep practicing, Mr. Pintu Pant! 🌟</p>
       </footer>
     </div>
   );
