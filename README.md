@@ -61,3 +61,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - road signs
 - cars
 - cartoons characters
+- day                   X
+- date                  X

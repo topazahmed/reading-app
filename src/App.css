@@ -3,11 +3,11 @@
 
 .App {
   text-align: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensure the app takes at least the full viewport height */
   background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%);
   color: #333;
   font-family: 'Comic Neue', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  overflow-x: hidden;
+  overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
 }
 
 .app-title {
@@ -348,8 +348,149 @@
   }
 }
 
-@keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.carousel-container {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-card {
+  position: absolute;
+  width: 80%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: all 0.5s ease;
+}
+
+.carousel-card.current {
+  transform: scale(1);
+  z-index: 2;
+}
+
+.carousel-card.partial {
+  transform: scale(0.8);
+  z-index: 1;
+}
+
+.carousel-card.hidden {
+  transform: scale(0.5);
+  z-index: 0;
+  opacity: 0;
+}
+
+.scroll-button {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.scroll-button.up {
+  top: 10px;
+}
+
+.scroll-button.down {
+  bottom: 10px;
+}
+
+.wheel-carousel {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wheel-card {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: all 0.5s ease;
+}
+
+.wheel-card.current {
+  transform: scale(1);
+  z-index: 2;
+}
+
+.wheel-card.partial {
+  transform: scale(0.8);
+  z-index: 1;
+}
+
+.wheel-card.hidden {
+  transform: scale(0.5);
+  z-index: 0;
+  opacity: 0;
+}
+
+.vertical-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.carousel-slide {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.carousel-slide.current {
+  transform: scale(1.2);
+  opacity: 1;
+  z-index: 2;
+}
+
+.carousel-slide.partial {
+  transform: scale(0.9);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.carousel-slide.hidden {
+  transform: scale(0.7);
+  opacity: 0;
+  z-index: 0;
 }

@@ -1,0 +1,7 @@
+.responsive-clock {
+  width: 90%; /* 90% width on mobile */
+  height: auto;
+  max-height: 50vh; /* 50% height on desktop */
+  display: block;
+  margin: 0 auto;
+}

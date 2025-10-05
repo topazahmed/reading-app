@@ -15,10 +15,13 @@ import {
   speakMathSolution,
 } from "./utils/math";
 import { MathProblem } from "./components/MathCard";
+import VerticalCarousel from "./components/VerticalCarousel";
+import VerticalDaysCarousel from "./components/VerticalDaysCarousel";
+import TimeLearningModule from "./components/TimeLearningModule";
 
 function App() {
   // Mode state
-  const [currentMode, setCurrentMode] = useState<"words" | "math">("words");
+  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time'>("words");
 
   // Words mode state
   const [selectedLength, setSelectedLength] = useState<number>(4);
@@ -65,17 +68,17 @@ function App() {
   }, []);
 
   // Update URL hash when mode changes
-  const handleModeChange = (mode: "words" | "math") => {
+  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time') => {
     console.log("Mode changing to:", mode); // Debug log
     setCurrentMode(mode);
-    window.location.hash = mode === "math" ? "math" : "";
+    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : '';
 
     // Reset state when switching modes
-    if (mode === "words") {
+    if (mode === 'words') {
       setCurrentPlayingWord("");
       const words = getRandomWords(selectedLength, 10);
       setCurrentWords(words);
-    } else {
+    } else if (mode === 'math') {
       setSolvedProblems(new Set());
       const problems = generateMathProblems(mathDifficulty, mathOperation, 10);
       setMathProblems(problems);
@@ -238,6 +241,21 @@ function App() {
     }
   };
 
+  const months = [
+    { name: "January", background: "winter.jpg" },
+    { name: "February", background: "valentine.jpg" },
+    { name: "March", background: "spring.jpg" },
+    { name: "April", background: "april.jpg" },
+    { name: "May", background: "may.jpg" },
+    { name: "June", background: "summer.jpg" },
+    { name: "July", background: "july.jpg" },
+    { name: "August", background: "august.jpg" },
+    { name: "September", background: "fall.jpg" },
+    { name: "October", background: "halloween.jpg" },
+    { name: "November", background: "thanksgiving.jpg" },
+    { name: "December", background: "christmas.jpg" },
+  ];
+
   return (
     <div className="App">
       <div className="app-title" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -289,13 +307,16 @@ function App() {
                   className="mode-dropdown-header"
                   value={currentMode}
                   onChange={(e) => {
-                    const newMode = e.target.value as "words" | "math";
+                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time';
                     console.log("Dropdown changed to:", newMode); // Debug log
                     handleModeChange(newMode);
                   }}
                 >
                   <option value="words">words</option>
                   <option value="math">math</option>
+                  <option value="month">month</option>
+                  <option value="days">days</option>
+                  <option value="time">time</option>
                 </select>
                 <span className="dropdown-arrow">▼</span>
               </div>
@@ -333,7 +354,7 @@ function App() {
               </button>
             </div>
           </>
-        ) : (
+        ) : currentMode === "math" ? (
           <>
             <MathSelector
               selectedDifficulty={mathDifficulty}
@@ -358,6 +379,12 @@ function App() {
               </button>
             </div>
           </>
+        ) : currentMode === "month" ? (
+          <VerticalCarousel months={months} />
+        ) : currentMode === "days" ? (
+          <VerticalDaysCarousel />
+        ) : (
+          <TimeLearningModule />
         )}
       </main>
 
