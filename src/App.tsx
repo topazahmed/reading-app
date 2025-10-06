@@ -57,6 +57,17 @@ function App() {
     .map(Number)
     .sort((a, b) => a - b);
 
+  // Auto-speak when modal opens
+  useEffect(() => {
+    if (isModalOpen) {
+      const message = "Hello friend, I am Mr. Pintu Pant. Thanks for learning with me.";
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      window.speechSynthesis.speak(utterance);
+    }
+  }, [isModalOpen]);
+
   // Handle URL hash for mode switching
   useEffect(() => {
     const handleHashChange = () => {
@@ -624,27 +635,100 @@ function App() {
                 marginBottom: '20px',
               }}
             />
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="theme"
-                  value="funky"
-                  checked={theme === 'funky'}
-                  onChange={() => handleThemeChange('funky')}
-                />
-                Funky Color
-              </label>
-              <label style={{ marginLeft: '20px' }}>
-                <input
-                  type="radio"
-                  name="theme"
-                  value="solid"
-                  checked={theme === 'solid'}
-                  onChange={() => handleThemeChange('solid')}
-                />
-                Solid Color
-              </label>
+            <div style={{
+              position: 'relative',
+              backgroundColor: '#f0f0f0',
+              borderRadius: '20px',
+              padding: '20px',
+              marginBottom: '20px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-10px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '0',
+                height: '0',
+                borderLeft: '15px solid transparent',
+                borderRight: '15px solid transparent',
+                borderBottom: '15px solid #f0f0f0',
+              }}></div>
+              <p style={{
+                margin: 0,
+                fontSize: '1.1rem',
+                color: '#333',
+                fontFamily: 'Arial, sans-serif',
+                lineHeight: '1.5',
+              }}>
+                "Hello friend, I am Mr. Pintu Pant. Thanks for learning with me."
+              </p>
+            </div>
+            
+            <div style={{
+              backgroundColor: '#e8f4f8',
+              border: '2px solid #4a90e2',
+              borderRadius: '15px',
+              padding: '20px',
+              marginTop: '20px',
+            }}>
+              <h3 style={{
+                margin: '0 0 15px 0',
+                fontSize: '1.3rem',
+                color: '#2c5aa0',
+                fontFamily: 'Fredoka One, cursive',
+                textAlign: 'center',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+              }}>
+                ⚙️ Settings
+              </h3>
+              
+              <div style={{
+                backgroundColor: 'white',
+                borderRadius: '10px',
+                padding: '15px',
+              }}>
+                <p style={{
+                  margin: '0 0 10px 0',
+                  fontSize: '1rem',
+                  color: '#555',
+                  fontWeight: 'bold',
+                }}>
+                  Theme:
+                </p>
+                <label style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  marginRight: '20px',
+                }}>
+                  <input
+                    type="radio"
+                    name="theme"
+                    value="funky"
+                    checked={theme === 'funky'}
+                    onChange={() => handleThemeChange('funky')}
+                    style={{ marginRight: '8px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '1rem', color: '#333' }}>🎨 Funky Colors</span>
+                </label>
+                <label style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}>
+                  <input
+                    type="radio"
+                    name="theme"
+                    value="solid"
+                    checked={theme === 'solid'}
+                    onChange={() => handleThemeChange('solid')}
+                    style={{ marginRight: '8px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '1rem', color: '#333' }}>🎯 Solid Colors</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>

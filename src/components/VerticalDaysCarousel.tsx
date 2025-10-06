@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import "./VerticalCarousel.scss";
+import React, { useRef, useState, useEffect } from "react";
+import "./VerticalDaysCarousel.scss";
 
 const days = [
   { name: "Monday", background: "monday.jpg" },
@@ -13,7 +13,10 @@ const days = [
 
 const VerticalDaysCarousel: React.FC = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
 
   // Define background colors for each day
   const dayColors = [
@@ -26,41 +29,119 @@ const VerticalDaysCarousel: React.FC = () => {
     "#FFC107", // Sunday - Yellow (Weekend)
   ];
 
-  const handleWheel = (e: React.WheelEvent) => {
-    if (e.deltaY > 0) {
-      setCurrentDayIndex((prev) => (prev + 1) % days.length);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleNext = () => {
+    setCurrentDayIndex((prev) => (prev + 1) % days.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentDayIndex((prev) => (prev - 1 + days.length) % days.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - touchEndX;
+    const diffY = touchStartY.current - touchEndY;
+
+    // Determine if swipe is more horizontal or vertical
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      // Horizontal swipe
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
     } else {
-      setCurrentDayIndex((prev) => (prev - 1 + days.length) % days.length);
+      // Vertical swipe
+      if (Math.abs(diffY) > 50) {
+        if (diffY > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
     }
   };
 
-  const getCarouselClass = (index: number) => {
-    const totalDays = days.length;
-    const relativeIndex = (index - currentDayIndex + totalDays) % totalDays;
+  const handleDayClick = (index: number) => {
+    setCurrentDayIndex(index);
+  };
 
-    if (relativeIndex === 0) return "carousel-slide current";
-    if (relativeIndex === 1 || relativeIndex === totalDays - 1) return "carousel-slide partial";
-    return "carousel-slide hidden";
+  const getTransform = () => {
+    if (isMobile) {
+      return `translateX(-${currentDayIndex * 100}%)`;
+    } else {
+      return `translateY(-${currentDayIndex * 100}%)`;
+    }
   };
 
   return (
-    <div
-      className="vertical-carousel"
-      ref={carouselRef}
-      onWheel={handleWheel}
-    >
-      {days.map((day, index) => (
-        <div
-          key={day.name}
-          className={getCarouselClass(index)}
-          style={{
-            backgroundImage: `url(${day.background})`,
-            backgroundColor: dayColors[index % dayColors.length],
-          }}
+    <div className="day-carousel-container">
+      <div 
+        className={`day-carousel ${isMobile ? 'mobile' : 'desktop'}`}
+        ref={carouselRef}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {!isMobile && (
+          <>
+            <button className="nav-button prev" onClick={handlePrev}>
+              ▲
+            </button>
+            <button className="nav-button next" onClick={handleNext}>
+              ▼
+            </button>
+          </>
+        )}
+        
+        <div 
+          className="carousel-track"
+          style={{ transform: getTransform() }}
         >
-          <h2>{day.name}</h2>
+          {days.map((day, index) => (
+            <div
+              key={day.name}
+              className={`carousel-slide ${index === currentDayIndex ? 'active' : ''}`}
+              style={{
+                backgroundImage: `url(${day.background})`,
+                backgroundColor: dayColors[index % dayColors.length],
+              }}
+            >
+              <h2>{day.name}</h2>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+
+      <div className="day-indicators">
+        {days.map((day, index) => (
+          <button
+            key={day.name}
+            className={`indicator ${index === currentDayIndex ? 'active' : ''}`}
+            onClick={() => handleDayClick(index)}
+            style={{
+              backgroundColor: dayColors[index % dayColors.length],
+            }}
+            aria-label={`Go to ${day.name}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };

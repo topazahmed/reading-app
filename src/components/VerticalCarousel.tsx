@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./VerticalCarousel.scss";
 
 interface Month {
@@ -12,7 +12,10 @@ interface VerticalCarouselProps {
 
 const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ months }) => {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
 
   // Define background colors for each month
   const monthColors = [
@@ -30,41 +33,134 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ months }) => {
     "#D32F2F", // December - Christmas Red
   ];
 
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Desktop: Mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
+    if (isMobile) return;
+    
+    e.preventDefault();
     if (e.deltaY > 0) {
-      setCurrentMonthIndex((prev) => (prev + 1) % months.length);
+      handleNext();
     } else {
-      setCurrentMonthIndex((prev) => (prev - 1 + months.length) % months.length);
+      handlePrev();
     }
   };
 
-  const getCarouselClass = (index: number) => {
-    const totalMonths = months.length;
-    const relativeIndex = (index - currentMonthIndex + totalMonths) % totalMonths;
+  // Mobile: Touch swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
 
-    if (relativeIndex === 0) return "carousel-slide current";
-    if (relativeIndex === 1 || relativeIndex === totalMonths - 1) return "carousel-slide partial";
-    return "carousel-slide hidden";
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    
+    const deltaX = touchStartX.current - touchEndX;
+    const deltaY = touchStartY.current - touchEndY;
+    
+    // Determine if swipe was horizontal or vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Horizontal swipe
+      if (deltaX > 50) {
+        handleNext();
+      } else if (deltaX < -50) {
+        handlePrev();
+      }
+    }
+  };
+
+  const handleNext = () => {
+    setCurrentMonthIndex((prev) => (prev + 1) % months.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentMonthIndex((prev) => (prev - 1 + months.length) % months.length);
+  };
+
+  const handleMonthClick = (index: number) => {
+    setCurrentMonthIndex(index);
   };
 
   return (
-    <div
-      className="vertical-carousel"
-      ref={carouselRef}
-      onWheel={handleWheel}
-    >
-      {months.map((month, index) => (
-        <div
-          key={month.name}
-          className={getCarouselClass(index)}
+    <div className="month-carousel-container">
+      <div
+        className={`month-carousel ${isMobile ? 'mobile' : 'desktop'}`}
+        ref={carouselRef}
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div 
+          className="carousel-track"
           style={{
-            backgroundImage: `url(${month.background})`,
-            backgroundColor: monthColors[index % monthColors.length],
+            transform: isMobile 
+              ? `translateX(-${currentMonthIndex * 100}%)`
+              : `translateY(-${currentMonthIndex * 100}%)`
           }}
         >
-          <h2>{month.name}</h2>
+          {months.map((month, index) => (
+            <div
+              key={month.name}
+              className={`carousel-slide ${index === currentMonthIndex ? 'active' : ''}`}
+              style={{
+                backgroundImage: `url(${month.background})`,
+                backgroundColor: monthColors[index % monthColors.length],
+              }}
+              onClick={() => handleMonthClick(index)}
+            >
+              <h2>{month.name}</h2>
+            </div>
+          ))}
         </div>
-      ))}
+
+        {/* Desktop Navigation Buttons */}
+        {!isMobile && (
+          <>
+            <button 
+              className="nav-button prev"
+              onClick={handlePrev}
+              aria-label="Previous month"
+            >
+              ▲
+            </button>
+            <button 
+              className="nav-button next"
+              onClick={handleNext}
+              aria-label="Next month"
+            >
+              ▼
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Month Indicators */}
+      <div className="month-indicators">
+        {months.map((month, index) => (
+          <button
+            key={index}
+            className={`indicator ${index === currentMonthIndex ? 'active' : ''}`}
+            onClick={() => handleMonthClick(index)}
+            aria-label={month.name}
+            style={{
+              backgroundColor: index === currentMonthIndex 
+                ? monthColors[index % monthColors.length] 
+                : 'rgba(0, 0, 0, 0.3)'
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
