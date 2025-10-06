@@ -21,6 +21,63 @@
     background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
     border-color: #e17055;
   }
+
+  .letters-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    // gap: 2px;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .letter-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: calc((100% - ((var(--letter-count) - 1) * 2px)) / var(--letter-count));
+    min-width: 0;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .word-speak-button {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: #4a4a4a;
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    .speaker-icon {
+      font-size: 1.3rem;
+    }
+
+    .speak-text {
+      font-size: 1rem;
+    }
+  }
 }
 
 /* Funky theme - keep default styles */
@@ -34,18 +91,28 @@
       background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
       border-color: #e17055;
     }
-  }
 
-  .letter-button {
-    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
-    color: white;
+    .letter-button {
+      background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+      color: white;
 
-    &:hover {
-      background: linear-gradient(135deg, #ff5252 0%, #26a69a 100%);
+      &:hover {
+        background: linear-gradient(135deg, #ff5252 0%, #26a69a 100%);
+      }
+
+      &.playing {
+        background: linear-gradient(135deg, #fdcb6e 0%, #fd79a8 100%);
+      }
     }
 
-    &.playing {
-      background: linear-gradient(135deg, #fdcb6e 0%, #fd79a8 100%);
+    .word-speak-button {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      color: #4a4a4a;
+      border: 2px solid #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #fed6e3 0%, #a8edea 100%);
+      }
     }
   }
 }
@@ -61,37 +128,97 @@
       background: #0056b3;
       border-color: #003d82;
     }
-  }
 
-  .letter-button {
-    background: red;
-    color: white;
-    border: 2px solid #cc0000;
+    .letter-button {
+      background: red;
+      color: white;
+      border: 2px solid #cc0000;
 
-    &:hover {
-      background: #cc0000;
+      &:hover {
+        background: #cc0000;
+      }
+
+      &.playing {
+        background: #cc0000;
+        border-color: #990000;
+      }
     }
 
-    &.playing {
-      background: #cc0000;
-      border-color: #990000;
+    .word-speak-button {
+      background: blue;
+      color: white;
+      border: 2px solid #0056b3;
+
+      &:hover {
+        background: #0056b3;
+      }
+
+      &:active {
+        background: #003d82;
+      }
     }
   }
 }
 
-.letters-container {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: nowrap;
-  width: 100%;
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .word-card {
+    padding: 20px 10px;
+    margin: 12px 5px;
+
+    .letters-container {
+      // gap: 2px;
+    }
+
+    .letter-button {
+      width: calc((100% - ((var(--letter-count) - 1) * 2px)) / var(--letter-count));
+      border-radius: 8px;
+      font-size: 0.9rem;
+      padding: 8px 4px;
+    }
+
+    .word-speak-button {
+      padding: 10px 15px;
+      font-size: 1rem;
+
+      .speaker-icon {
+        font-size: 1.1rem;
+      }
+
+      .speak-text {
+        font-size: 0.9rem;
+      }
+    }
+  }
 }
 
-.letter-button {
-  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  width: calc((100% - 32px) / var(--letter-count));
+@media (max-width: 480px) {
+  .word-card {
+    padding: 15px 5px;
+    margin: 10px 3px;
+
+    .letters-container {
+      // gap: 2px;
+    }
+
+    .letter-button {
+      width: calc((100% - ((var(--letter-count) - 1) * 2px)) / var(--letter-count));
+      border-radius: 6px;
+      font-size: 0.85rem;
+      padding: 6px 2px;
+    }
+
+    .word-speak-button {
+      padding: 8px 12px;
+      font-size: 0.95rem;
+
+      .speaker-icon {
+        font-size: 1rem;
+      }
+
+      .speak-text {
+        font-size: 0.85rem;
+      }
+    }
+  }
 }

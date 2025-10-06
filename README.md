@@ -53,9 +53,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - common knowledge
 - animals
 - relationships
-- countries
-- flags
-- time
+- countries             x
+- flags                 x
+- time                  x
 - language
 - music notes
 - road signs            x

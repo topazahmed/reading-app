@@ -105,6 +105,103 @@
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+.answer-input-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mic-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.listening {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
+.spoken-answer-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.spoken-number {
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 12px;
+  min-width: 80px;
+  text-align: center;
+
+  &.correct {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    animation: bounce 0.6s ease-in-out;
+  }
+
+  &.incorrect {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    animation: shake 0.5s ease-in-out;
+  }
+}
+
+.feedback-icon {
+  font-size: 2.5rem;
+  animation: bounce 0.6s ease-in-out;
+}
+
+.retry-button {
+  background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: scale(1.1) rotate(180deg);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #fb8c00 0%, #f57c00 100%);
+  }
+
+  &:active {
+    transform: scale(0.95) rotate(180deg);
+  }
+}
+
 .solve-button {
   background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
   color: white;
@@ -293,8 +390,43 @@
     font-size: 2rem;
   }
 
+  .mic-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .spoken-number {
+    font-size: 1.4rem;
+    padding: 8px 14px;
+    min-width: 50px;
+  }
+
+  .feedback-icon {
+    font-size: 2rem;
+  }
+
+  .retry-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
   .solve-button {
     padding: 8px 16px;
     font-size: 1rem;
   }
 }
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
