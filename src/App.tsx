@@ -82,8 +82,23 @@ function App() {
   // Update URL hash when mode changes
   const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books') => {
     console.log("Mode changing to:", mode); // Debug log
+    
+    // Update mode immediately
     setCurrentMode(mode);
-    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : mode === 'cars' ? 'cars' : mode === 'road-signs' ? 'road-signs' : mode === 'countries' ? 'countries' : mode === 'books' ? 'books' : '';
+    
+    // Update URL hash
+    const hashMap: { [key: string]: string } = {
+      'math': 'math',
+      'month': 'month',
+      'days': 'days',
+      'time': 'time',
+      'cars': 'cars',
+      'road-signs': 'road-signs',
+      'countries': 'countries',
+      'books': 'books',
+      'words': ''
+    };
+    window.location.hash = hashMap[mode] || '';
 
     // Reset state when switching modes
     if (mode === 'words') {
@@ -442,9 +457,26 @@ function App() {
                   className="mode-dropdown-header"
                   value={currentMode}
                   onChange={(e) => {
+                    e.preventDefault();
                     const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
                     console.log("Dropdown changed to:", newMode); // Debug log
-                    handleModeChange(newMode);
+                    
+                    // Ensure mode actually changes
+                    if (newMode !== currentMode) {
+                      handleModeChange(newMode);
+                    }
+                  }}
+                  onBlur={(e) => {
+                    // Fallback for touch devices
+                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
+                    if (newMode !== currentMode) {
+                      console.log("Dropdown blur - changing to:", newMode);
+                      handleModeChange(newMode);
+                    }
+                  }}
+                  onClick={(e) => {
+                    // Force focus on mobile/tablet
+                    e.currentTarget.focus();
                   }}
                 >
                   <option value="words">words</option>

@@ -104,17 +104,29 @@ body {
   position: relative;
   pointer-events: auto;
   z-index: 10;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 
   &::-ms-expand {
     display: none;
   }
 
+  &:focus {
+    border-color: rgba(255, 107, 107, 0.6);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+  }
+
+  &:active {
+    border-color: rgba(255, 107, 107, 0.8);
+  }
+
+  // Ensure options are visible on all browsers
   option {
     background: white;
     color: #333;
     font-family: 'Comic Neue', cursive;
     font-size: 1rem;
-    padding: 8px 12px;
+    padding: 10px;
   }
 
   &:hover {
