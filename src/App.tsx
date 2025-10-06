@@ -22,10 +22,11 @@ import TimeLearningModule from "./components/TimeLearningModule";
 import CarsLearningModule from "./components/CarsLearningModule";
 import RoadSignsLearningModule from "./components/RoadSignsLearningModule";
 import CountriesLearningModule from "./components/CountriesLearningModule";
+import BooksLearningModule from "./components/BooksPage";
 
 function App() {
   // Mode state
-  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries'>("words");
+  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books'>("words");
 
   // Words mode state
   const [selectedLength, setSelectedLength] = useState<number>(4);
@@ -79,10 +80,10 @@ function App() {
   }, []);
 
   // Update URL hash when mode changes
-  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries') => {
+  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books') => {
     console.log("Mode changing to:", mode); // Debug log
     setCurrentMode(mode);
-    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : mode === 'cars' ? 'cars' : mode === 'road-signs' ? 'road-signs' : mode === 'countries' ? 'countries' : '';
+    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : mode === 'cars' ? 'cars' : mode === 'road-signs' ? 'road-signs' : mode === 'countries' ? 'countries' : mode === 'books' ? 'books' : '';
 
     // Reset state when switching modes
     if (mode === 'words') {
@@ -441,7 +442,7 @@ function App() {
                   className="mode-dropdown-header"
                   value={currentMode}
                   onChange={(e) => {
-                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries';
+                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
                     console.log("Dropdown changed to:", newMode); // Debug log
                     handleModeChange(newMode);
                   }}
@@ -454,6 +455,7 @@ function App() {
                   <option value="cars">cars</option>
                   <option value="road-signs">road signs</option>
                   <option value="countries">countries</option>
+                  <option value="books">my books</option>
                 </select>
                 <span className="dropdown-arrow">▼</span>
               </div>
@@ -526,6 +528,8 @@ function App() {
           <RoadSignsLearningModule />
         ) : currentMode === "countries" ? (
           <CountriesLearningModule />
+        ) : currentMode === "books" ? (
+          <BooksLearningModule />
         ) : (
           <TimeLearningModule />
         )}
