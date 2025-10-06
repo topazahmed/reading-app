@@ -50,6 +50,17 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .learning-mode-header {
   display: flex;
   align-items: center;
@@ -159,6 +170,61 @@ body {
 
 .dropdown-container:hover .dropdown-arrow {
   transform: translateY(-50%) scale(1.1);
+}
+
+.mode-selector-button {
+  background: transparent;
+  border: 3px solid rgba(255, 107, 107, 0.3);
+  border-radius: 12px;
+  padding: 8px 35px 8px 12px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 1px;
+  margin: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease;
+
+  .current-mode {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+  }
+
+  .dropdown-arrow {
+    position: static;
+    transform: none;
+    margin-left: 8px;
+  }
+
+  &:hover {
+    border-color: rgba(255, 107, 107, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+
+    .dropdown-arrow {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    border-color: rgba(255, 107, 107, 0.8);
+  }
+
+  &:focus {
+    border-color: rgba(255, 107, 107, 0.6);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+  }
 }
 
 .audio-warning {
@@ -277,6 +343,11 @@ body {
     font-size: 2.3rem;
     padding: 6px 30px 6px 10px;
   }
+
+  .mode-selector-button {
+    font-size: 2.3rem;
+    padding: 6px 30px 6px 10px;
+  }
   
   .dropdown-arrow {
     font-size: 1.3rem;
@@ -322,6 +393,12 @@ body {
   }
   
   .mode-dropdown-header {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+    padding: 5px 25px 5px 8px;
+  }
+
+  .mode-selector-button {
     font-size: 2rem;
     letter-spacing: 0.5px;
     padding: 5px 25px 5px 8px;

@@ -25,8 +25,15 @@ import CountriesLearningModule from "./components/CountriesLearningModule";
 import BooksLearningModule from "./components/BooksPage";
 
 function App() {
-  // Mode state
-  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books'>("words");
+  // Mode state - Initialize from localStorage or default to 'words'
+  type ModeType = 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
+  const [currentMode, setCurrentMode] = useState<ModeType>(() => {
+    const savedMode = localStorage.getItem('learningMode');
+    if (savedMode && ['words', 'math', 'month', 'days', 'time', 'cars', 'road-signs', 'countries', 'books'].includes(savedMode)) {
+      return savedMode as ModeType;
+    }
+    return 'words';
+  });
 
   // Words mode state
   const [selectedLength, setSelectedLength] = useState<number>(4);
@@ -53,6 +60,9 @@ function App() {
   // Theme state
   const [theme, setTheme] = useState<'funky' | 'solid'>('funky');
 
+  // Module menu state
+  const [isModuleMenuOpen, setIsModuleMenuOpen] = useState(false);
+
   const availableLengths = Object.keys(wordsByLength)
     .map(Number)
     .sort((a, b) => a - b);
@@ -72,11 +82,21 @@ function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1); // Remove the '#'
-      if (hash === "math") {
-        setCurrentMode("math");
-      } else {
-        setCurrentMode("words");
-      }
+      const hashToModeMap: { [key: string]: ModeType } = {
+        'math': 'math',
+        'month': 'month',
+        'days': 'days',
+        'time': 'time',
+        'cars': 'cars',
+        'road-signs': 'road-signs',
+        'countries': 'countries',
+        'books': 'books',
+        '': 'words'
+      };
+      
+      const newMode = hashToModeMap[hash] || 'words';
+      setCurrentMode(newMode);
+      localStorage.setItem('learningMode', newMode);
     };
 
     // Set initial mode based on URL hash
@@ -91,10 +111,13 @@ function App() {
   }, []);
 
   // Update URL hash when mode changes
-  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books') => {
+  const handleModeChange = (mode: ModeType) => {
     console.log("Mode changing to:", mode); // Debug log
     
-    // Update mode immediately
+    // Save to localStorage for persistence
+    localStorage.setItem('learningMode', mode);
+    
+    // Update mode state
     setCurrentMode(mode);
     
     // Update URL hash
@@ -109,7 +132,11 @@ function App() {
       'books': 'books',
       'words': ''
     };
-    window.location.hash = hashMap[mode] || '';
+    
+    // Use replaceState to avoid history clutter
+    if (hashMap[mode] !== undefined) {
+      window.location.hash = hashMap[mode];
+    }
 
     // Reset state when switching modes
     if (mode === 'words') {
@@ -122,6 +149,12 @@ function App() {
       setMathProblems(problems);
     }
   };
+
+  // Persist current mode to localStorage whenever it changes
+  useEffect(() => {
+    console.log("Current mode updated to:", currentMode);
+    localStorage.setItem('learningMode', currentMode);
+  }, [currentMode]);
 
   useEffect(() => {
     setAudioSupported(isAudioSupported());
@@ -463,45 +496,15 @@ function App() {
             )}
             <div className="learning-mode-header">
               <span className="learning-text">Learning </span>
-              <div className="dropdown-container">
-                <select
-                  className="mode-dropdown-header"
-                  value={currentMode}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
-                    console.log("Dropdown changed to:", newMode); // Debug log
-                    
-                    // Ensure mode actually changes
-                    if (newMode !== currentMode) {
-                      handleModeChange(newMode);
-                    }
-                  }}
-                  onBlur={(e) => {
-                    // Fallback for touch devices
-                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books';
-                    if (newMode !== currentMode) {
-                      console.log("Dropdown blur - changing to:", newMode);
-                      handleModeChange(newMode);
-                    }
-                  }}
-                  onClick={(e) => {
-                    // Force focus on mobile/tablet
-                    e.currentTarget.focus();
-                  }}
-                >
-                  <option value="words">words</option>
-                  <option value="math">math</option>
-                  <option value="month">month</option>
-                  <option value="days">days</option>
-                  <option value="time">time</option>
-                  <option value="cars">cars</option>
-                  <option value="road-signs">road signs</option>
-                  <option value="countries">countries</option>
-                  <option value="books">my books</option>
-                </select>
+              <button
+                className="mode-selector-button"
+                onClick={() => setIsModuleMenuOpen(true)}
+              >
+                <span className="current-mode">
+                  {currentMode === 'road-signs' ? 'road signs' : currentMode === 'books' ? 'my books' : currentMode}
+                </span>
                 <span className="dropdown-arrow">▼</span>
-              </div>
+              </button>
             </div>
           </header>
         </div>
@@ -730,6 +733,150 @@ function App() {
                 </label>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Full-page Module Menu */}
+      {isModuleMenuOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 2000,
+            display: 'flex',
+            flexDirection: 'column',
+            animation: 'slideDown 0.3s ease-out',
+          }}
+        >
+          <div style={{
+            padding: '20px',
+            borderBottom: '2px solid rgba(255, 255, 255, 0.2)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <h2 style={{
+              color: 'white',
+              margin: 0,
+              fontSize: '1.8rem',
+              fontFamily: 'Fredoka One, cursive',
+            }}>
+              Choose a Module
+            </h2>
+            <button
+              onClick={() => setIsModuleMenuOpen(false)}
+              style={{
+                background: 'linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '45px',
+                height: '45px',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              ✕
+            </button>
+          </div>
+
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: '20px',
+          }}>
+            {[
+              { mode: 'words' as const, icon: '📝', label: 'Words', color: '#667eea' },
+              { mode: 'math' as const, icon: '🔢', label: 'Math', color: '#f093fb' },
+              { mode: 'month' as const, icon: '📅', label: 'Months', color: '#4facfe' },
+              { mode: 'days' as const, icon: '🗓️', label: 'Days', color: '#43e97b' },
+              { mode: 'time' as const, icon: '⏰', label: 'Time', color: '#fa709a' },
+              { mode: 'cars' as const, icon: '🚗', label: 'Cars', color: '#30cfd0' },
+              { mode: 'road-signs' as const, icon: '🚸', label: 'Road Signs', color: '#a8edea' },
+              { mode: 'countries' as const, icon: '🌍', label: 'Countries', color: '#ffd89b' },
+              { mode: 'books' as const, icon: '📚', label: 'My Books', color: '#c471f5' },
+            ].map((module) => (
+              <button
+                key={module.mode}
+                onClick={() => {
+                  handleModeChange(module.mode);
+                  setIsModuleMenuOpen(false);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '20px',
+                  marginBottom: '15px',
+                  background: currentMode === module.mode 
+                    ? `linear-gradient(135deg, ${module.color} 0%, ${module.color}dd 100%)`
+                    : 'rgba(255, 255, 255, 0.1)',
+                  border: currentMode === module.mode 
+                    ? `3px solid ${module.color}` 
+                    : '2px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(10px)',
+                }}
+                onMouseEnter={(e) => {
+                  if (currentMode !== module.mode) {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (currentMode !== module.mode) {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }
+                }}
+              >
+                <span style={{
+                  fontSize: '3rem',
+                  marginRight: '20px',
+                }}>
+                  {module.icon}
+                </span>
+                <div style={{
+                  textAlign: 'left',
+                  flex: 1,
+                }}>
+                  <h3 style={{
+                    margin: 0,
+                    color: 'white',
+                    fontSize: '1.5rem',
+                    fontFamily: 'Fredoka One, cursive',
+                    textTransform: 'uppercase',
+                  }}>
+                    {module.label}
+                  </h3>
+                  {currentMode === module.mode && (
+                    <p style={{
+                      margin: '5px 0 0 0',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '0.9rem',
+                    }}>
+                      ✓ Currently Active
+                    </p>
+                  )}
+                </div>
+                <span style={{
+                  fontSize: '2rem',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                }}>
+                  ›
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       )}
