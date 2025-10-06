@@ -1,5 +1,5 @@
 import React from 'react';
-import './LengthSelector.css';
+import './LengthSelector.scss';
 
 interface LengthSelectorProps {
   selectedLength: number;

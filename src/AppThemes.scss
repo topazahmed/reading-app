@@ -1,0 +1,80 @@
+$funky-theme: (
+  background-color: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8),
+  text-color: #fff,
+  button-background: #ff6b6b,
+  button-hover: #4ecdc4
+);
+
+$solid-theme: (
+  background-color: #f8d7da, /* Light pink */
+  text-color: #212529, /* Dark text for contrast */
+  button-background: #007bff, /* Solid blue */
+  button-hover: #0056b3, /* Darker blue for hover */
+  cta-background: #28a745, /* Green for smaller CTAs */
+  cta-hover: #1e7e34, /* Darker green for hover */
+  card-background: #ffc107, /* Yellow for cards */
+  card-hover: #e0a800 /* Darker yellow for hover */
+);
+
+@mixin theme($theme-map) {
+  --background-color: map-get($theme-map, background-color);
+  --text-color: map-get($theme-map, text-color);
+  --button-background: map-get($theme-map, button-background);
+  --button-hover: map-get($theme-map, button-hover);
+  --cta-background: map-get($theme-map, cta-background);
+  --cta-hover: map-get($theme-map, cta-hover);
+  --card-background: map-get($theme-map, card-background);
+  --card-hover: map-get($theme-map, card-hover);
+}
+
+:root.funky-theme {
+  @include theme($funky-theme);
+}
+
+:root.solid-theme {
+  @include theme($solid-theme);
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Fredoka One', cursive;
+}
+
+button {
+  background-color: var(--button-background);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+.cta {
+  background-color: var(--cta-background);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.cta:hover {
+  background-color: var(--cta-hover);
+}
+
+.card {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  background-color: var(--card-hover);
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import MathCard, { MathProblem } from './MathCard';
-import './MathGrid.css';
+import './MathGrid.scss';
 
 interface MathGridProps {
   problems: MathProblem[];

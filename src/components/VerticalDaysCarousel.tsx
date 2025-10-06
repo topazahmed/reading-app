@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./VerticalCarousel.css";
+import "./VerticalCarousel.scss";
 
 const days = [
   { name: "Monday", background: "monday.jpg" },
@@ -14,6 +14,17 @@ const days = [
 const VerticalDaysCarousel: React.FC = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Define background colors for each day
+  const dayColors = [
+    "#2196F3", // Monday - Blue (Start of week)
+    "#4CAF50", // Tuesday - Green
+    "#FF9800", // Wednesday - Orange (Middle of week)
+    "#9C27B0", // Thursday - Purple
+    "#F44336", // Friday - Red (End of work week)
+    "#00BCD4", // Saturday - Cyan (Weekend)
+    "#FFC107", // Sunday - Yellow (Weekend)
+  ];
 
   const handleWheel = (e: React.WheelEvent) => {
     if (e.deltaY > 0) {
@@ -44,6 +55,7 @@ const VerticalDaysCarousel: React.FC = () => {
           className={getCarouselClass(index)}
           style={{
             backgroundImage: `url(${day.background})`,
+            backgroundColor: dayColors[index % dayColors.length],
           }}
         >
           <h2>{day.name}</h2>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./App.scss";
+import "./AppThemes.scss";
 import LengthSelector from "./components/LengthSelector";
 import WordGrid from "./components/WordGrid";
 import MathSelector, {
@@ -18,10 +19,13 @@ import { MathProblem } from "./components/MathCard";
 import VerticalCarousel from "./components/VerticalCarousel";
 import VerticalDaysCarousel from "./components/VerticalDaysCarousel";
 import TimeLearningModule from "./components/TimeLearningModule";
+import CarsLearningModule from "./components/CarsLearningModule";
+import RoadSignsLearningModule from "./components/RoadSignsLearningModule";
+import CountriesLearningModule from "./components/CountriesLearningModule";
 
 function App() {
   // Mode state
-  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time'>("words");
+  const [currentMode, setCurrentMode] = useState<'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries'>("words");
 
   // Words mode state
   const [selectedLength, setSelectedLength] = useState<number>(4);
@@ -40,6 +44,13 @@ function App() {
   // State for Pintu Pant image animation
   const [isImageExpanded, setIsImageExpanded] = useState(false);
   const [speechText, setSpeechText] = useState("I am Mr. Pintu Pant. Thanks for learning with me.");
+
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Theme state
+  const [theme, setTheme] = useState<'funky' | 'solid'>('funky');
 
   const availableLengths = Object.keys(wordsByLength)
     .map(Number)
@@ -68,10 +79,10 @@ function App() {
   }, []);
 
   // Update URL hash when mode changes
-  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time') => {
+  const handleModeChange = (mode: 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries') => {
     console.log("Mode changing to:", mode); // Debug log
     setCurrentMode(mode);
-    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : '';
+    window.location.hash = mode === 'math' ? 'math' : mode === 'month' ? 'month' : mode === 'cars' ? 'cars' : mode === 'road-signs' ? 'road-signs' : mode === 'countries' ? 'countries' : '';
 
     // Reset state when switching modes
     if (mode === 'words') {
@@ -219,25 +230,14 @@ function App() {
   };
 
   const toggleImageSize = () => {
-    if (isImageExpanded) {
-      const utterance = new SpeechSynthesisUtterance("BYE");
-      utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.name.includes("Google UK English Female")) || null;
-      utterance.rate = 1.2;
-      window.speechSynthesis.speak(utterance);
+    setIsModalOpen(!isModalOpen);
+  };
 
-      setSpeechText("BYEEEE");
-      setTimeout(() => {
-        setIsImageExpanded(false);
-        setSpeechText("Hi, I am Mr. Pintu Pant. Thanks for learning with me.");
-      }, 1000); // Shrink back after 1 second
-    } else {
-      setIsImageExpanded(true);
-      const utterance = new SpeechSynthesisUtterance("Hiiiiiiii, I am Mr. Pintu Pant. Thanks for learning with me.");
-      utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.name.includes("Google UK English Female")) || null;
-      utterance.rate = 1.2;
-      setTimeout(() => {
-        window.speechSynthesis.speak(utterance);
-      }, 3000); // Speak after the growing animation completes
+  const handleThemeChange = (newTheme: 'funky' | 'solid') => {
+    setTheme(newTheme);
+    const themeLink = document.getElementById('theme-stylesheet') as HTMLLinkElement;
+    if (themeLink) {
+      themeLink.href = newTheme === 'funky' ? '/funky-theme.css' : '/solid-theme.css';
     }
   };
 
@@ -256,8 +256,103 @@ function App() {
     { name: "December", background: "christmas.jpg" },
   ];
 
+  useEffect(() => {
+    const checkDeviceType = () => {
+      const isMobile = window.innerWidth <= 768;
+      const modalDismissed = localStorage.getItem("modalDismissed");
+      if (!isMobile && !modalDismissed) {
+        setShowModal(true);
+      }
+    };
+
+    checkDeviceType();
+    window.addEventListener("resize", checkDeviceType);
+
+    return () => {
+      window.removeEventListener("resize", checkDeviceType);
+    };
+  }, []);
+
+  const closeModal = () => {
+    setShowModal(false);
+    localStorage.setItem("modalDismissed", "true");
+  };
+
+  useEffect(() => {
+    // Load theme from localStorage on initial render
+    const savedTheme = localStorage.getItem('app-theme') as 'funky' | 'solid';
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save theme to localStorage whenever it changes
+    localStorage.setItem('app-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'funky') {
+      root.classList.add('funky-theme');
+      root.classList.remove('solid-theme');
+    } else {
+      root.classList.add('solid-theme');
+      root.classList.remove('funky-theme');
+    }
+  }, [theme]);
+
   return (
     <div className="App">
+      {showModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              maxWidth: "500px",
+              textAlign: "center",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <h2>Welcome to Mr. Pintu Pant's Learning App!</h2>
+            <img src="/pintupant.png" alt="Pintu Pant Icon" style={{ width: "100px", height: "100px", animation: "shake-sway 2s infinite" }} />
+            <p>
+              This app was designed with mobile first in mind. It should still work on all devices. There may be bugs and quirks, please forgive my inattentiveness for this as this is a hobby project and not meant for commercial purpose. But if you want to buy me coffee I will be at your nearby Tim Hortons on Friday and Saturday night. Thanks and enjoy your time with the little ones before they grow up.
+            </p>
+            <button
+              onClick={closeModal}
+              style={{
+                marginTop: "20px",
+                padding: "10px 20px",
+                fontSize: "16px",
+                backgroundColor: "#007BFF",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="app-title" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <header>
@@ -275,7 +370,7 @@ function App() {
                   height: isImageExpanded ? 'auto' : '30px',
                   marginRight: isImageExpanded ? '0' : '10px',
                   transition: isImageExpanded ? 'all 3s ease' : 'all 1.5s ease',
-                  animation: isImageExpanded ? 'shake 0.5s infinite' : 'none',
+                  animation: 'shake-sway 2s infinite', // Add animation
                   cursor: 'pointer',
                 }}
                 onClick={toggleImageSize}
@@ -286,18 +381,57 @@ function App() {
               <div
                 style={{
                   position: 'absolute',
-                  top: '70%',
+                  top: '10%',
                   left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  background: 'white',
-                  border: '2px solid black',
+                  transform: 'translateX(-50%)',
+                  width: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  zIndex: 1000,
+                  padding: '20px',
                   borderRadius: '10px',
-                  padding: '10px',
-                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                  zIndex: 1001,
+                  textAlign: 'center',
                 }}
               >
+                <button
+                  onClick={() => setIsImageExpanded(false)}
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    background: 'red',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '30px',
+                    height: '30px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  X
+                </button>
                 <p>{speechText}</p>
+                <div style={{ marginTop: '20px' }}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="theme"
+                      value="funky"
+                      checked={theme === 'funky'}
+                      onChange={() => handleThemeChange('funky')}
+                    />
+                    Funky Color
+                  </label>
+                  <label style={{ marginLeft: '20px' }}>
+                    <input
+                      type="radio"
+                      name="theme"
+                      value="solid"
+                      checked={theme === 'solid'}
+                      onChange={() => handleThemeChange('solid')}
+                    />
+                    Solid Color
+                  </label>
+                </div>
               </div>
             )}
             <div className="learning-mode-header">
@@ -307,7 +441,7 @@ function App() {
                   className="mode-dropdown-header"
                   value={currentMode}
                   onChange={(e) => {
-                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time';
+                    const newMode = e.target.value as 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries';
                     console.log("Dropdown changed to:", newMode); // Debug log
                     handleModeChange(newMode);
                   }}
@@ -317,6 +451,9 @@ function App() {
                   <option value="month">month</option>
                   <option value="days">days</option>
                   <option value="time">time</option>
+                  <option value="cars">cars</option>
+                  <option value="road-signs">road signs</option>
+                  <option value="countries">countries</option>
                 </select>
                 <span className="dropdown-arrow">▼</span>
               </div>
@@ -383,14 +520,99 @@ function App() {
           <VerticalCarousel months={months} />
         ) : currentMode === "days" ? (
           <VerticalDaysCarousel />
+        ) : currentMode === "cars" ? (
+          <CarsLearningModule />
+        ) : currentMode === "road-signs" ? (
+          <RoadSignsLearningModule />
+        ) : currentMode === "countries" ? (
+          <CountriesLearningModule />
         ) : (
           <TimeLearningModule />
         )}
       </main>
 
       <footer className="App-footer">
-        <p>🎉 Keep practicing, Mr. Pintu Pant! 🌟</p>
+        <p>🎉 Keep practicing with Mr. Pintu Pant! 🌟</p>
       </footer>
+
+      {isModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '10px',
+              padding: '20px',
+              textAlign: 'center',
+              position: 'relative',
+              maxWidth: '600px',
+              width: '90%',
+            }}
+          >
+            <button
+              onClick={() => setIsModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: 'red',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '30px',
+                height: '30px',
+                cursor: 'pointer',
+              }}
+            >
+              X
+            </button>
+            <img
+              src="/pintupant.png"
+              alt="Pintu Pant Icon"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '10px',
+                marginBottom: '20px',
+              }}
+            />
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="funky"
+                  checked={theme === 'funky'}
+                  onChange={() => handleThemeChange('funky')}
+                />
+                Funky Color
+              </label>
+              <label style={{ marginLeft: '20px' }}>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="solid"
+                  checked={theme === 'solid'}
+                  onChange={() => handleThemeChange('solid')}
+                />
+                Solid Color
+              </label>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

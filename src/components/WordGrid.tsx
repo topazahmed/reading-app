@@ -1,6 +1,6 @@
 import React from 'react';
 import WordCard from './WordCard';
-import './WordGrid.css';
+import './WordGrid.scss';
 
 interface WordGridProps {
   words: string[];

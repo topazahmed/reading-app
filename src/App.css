@@ -1,5 +1,19 @@
+/* UNUSED FILE: Marked for deletion - converted to App.scss */
 /* Import Google Fonts for kid-friendly typography */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+
+/* Define CSS variables for dynamic theme switching */
+:root {
+  --background-color: #f0f4f8;
+  --text-color: #333;
+  --button-background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  --button-hover: linear-gradient(135deg, #ff5252 0%, #26a69a 50%, #2196f3 100%);
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
 
 .App {
   text-align: center;
@@ -493,4 +507,13 @@
   transform: scale(0.7);
   opacity: 0;
   z-index: 0;
+}
+
+/* Add shaking and swaying animation */
+@keyframes shake-sway {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
 }

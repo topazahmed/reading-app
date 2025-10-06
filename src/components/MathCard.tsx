@@ -1,5 +1,5 @@
 import React from 'react';
-import './MathCard.css';
+import './MathCard.scss';
 
 export interface MathProblem {
   num1: number;

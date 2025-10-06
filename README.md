@@ -58,8 +58,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - time
 - language
 - music notes
-- road signs
-- cars
+- road signs            x
+- cars                  x
 - cartoons characters
 - day                   X
 - date                  X

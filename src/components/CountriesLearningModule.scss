@@ -1,0 +1,330 @@
+.countries-learning-module {
+  width: 100%;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+.countries-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.country-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  border: 3px solid #3498db;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  min-width: 500px;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.country-flag-container {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ecf0f1;
+}
+
+.country-flag {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 1px solid #bdc3c7;
+}
+
+.country-info {
+  width: 100%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.country-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.info-label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-value {
+  font-weight: 700;
+  color: #3498db;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.country-name-button {
+  background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 20px 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Comic Neue', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #2980b9 0%, #27ae60 100%);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.new-country-section {
+  margin-top: 20px;
+}
+
+.new-country-button {
+  background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 30px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Comic Neue', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #c0392b 0%, #d68910 100%);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .countries-learning-module {
+    padding: 10px;
+  }
+
+  .country-card {
+    min-width: auto;
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-width: 2px;
+  }
+
+  .country-flag-container {
+    width: 250px;
+    height: 167px;
+    padding: 15px;
+  }
+
+  .country-info {
+    padding: 12px;
+  }
+
+  .country-info-row {
+    padding: 6px 8px;
+  }
+
+  .info-label,
+  .info-value {
+    font-size: 0.95rem;
+  }
+
+  .country-name-button {
+    font-size: 1.2rem;
+    padding: 15px 25px;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .new-country-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .countries-learning-module {
+    padding: 5px;
+    gap: 20px;
+  }
+
+  .country-card {
+    min-width: auto;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border-width: 2px;
+    gap: 20px;
+  }
+
+  .country-flag-container {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 3/2;
+    padding: 8px;
+  }
+
+  .country-info {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .country-info-row {
+    padding: 5px 6px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    &:hover {
+      transform: translateX(2px);
+    }
+  }
+
+  .info-label {
+    font-size: 0.85rem;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .info-value {
+    font-size: 0.85rem;
+    text-align: right;
+    padding-left: 0;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .country-name-button {
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .new-country-button {
+    font-size: 1.05rem;
+    padding: 10px 20px;
+  }
+}
+
+// Theme overrides
+body[data-theme="funky"] {
+  .country-card {
+    background: linear-gradient(135deg, #e3f2fd 0%, #fff3e0 100%);
+    border-color: #2196f3;
+  }
+
+  .country-name-button {
+    background: linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #1e88e5 0%, #43a047 100%);
+    }
+  }
+
+  .new-country-button {
+    background: linear-gradient(135deg, #ef5350 0%, #ffa726 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #e53935 0%, #fb8c00 100%);
+    }
+  }
+}
+
+body[data-theme="solid"] {
+  .country-card {
+    background: #ffffff;
+    border-color: #2196f3;
+  }
+
+  .country-name-button {
+    background: #2196f3;
+
+    &:hover {
+      background: #1976d2;
+    }
+  }
+
+  .new-country-button {
+    background: #ff9800;
+
+    &:hover {
+      background: #f57c00;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "./TimeLearningModule.css";
+import "./TimeLearningModule.scss";
 
 const TimeLearningModule: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

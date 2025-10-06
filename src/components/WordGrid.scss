@@ -1,0 +1,43 @@
+.word-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.word-grid-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #4a4a4a;
+  font-size: 1.2rem;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.7));
+  border: 3px dashed #ff6b6b;
+  border-radius: 20px;
+  margin: 20px 0;
+  line-height: 1.5;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.words-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 40px 0;
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 1024px) {
+  .words-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .words-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+

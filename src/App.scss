@@ -1,0 +1,546 @@
+/* Import Google Fonts for kid-friendly typography */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+
+/* Define CSS variables for dynamic theme switching */
+:root {
+  --background-color: #f0f4f8;
+  --text-color: #333;
+  --button-background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  --button-hover: linear-gradient(135deg, #ff5252 0%, #26a69a 50%, #2196f3 100%);
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%);
+  color: #333;
+  font-family: 'Comic Neue', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  overflow-y: auto;
+}
+
+.app-title {
+  padding: 20px;
+  margin-bottom: 10px;
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin: 0;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.2;
+    letter-spacing: 1px;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.learning-mode-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  margin: 0;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.learning-text {
+  margin-right: 8px;
+}
+
+.dropdown-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mode-dropdown-header {
+  background: transparent;
+  border: 3px solid rgba(255, 107, 107, 0.3);
+  border-radius: 12px;
+  padding: 8px 35px 8px 12px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 1px;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  pointer-events: auto;
+  z-index: 10;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  option {
+    background: white;
+    color: #333;
+    font-family: 'Comic Neue', cursive;
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+
+  &:hover {
+    border-color: rgba(255, 107, 107, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 107, 107, 0.8);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+  }
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+.dropdown-container:hover .dropdown-arrow {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.audio-warning {
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 2px solid #fd79a8;
+  color: #856404;
+  padding: 12px 20px;
+  border-radius: 15px;
+  margin: 15px auto 20px auto;
+  max-width: 500px;
+  font-weight: 600;
+  font-family: 'Comic Neue', cursive;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.App-main {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.new-words-section {
+  text-align: center;
+  margin: 30px 0 20px 0;
+}
+
+.new-words-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 16px 32px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Comic Neue', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 200px;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #ff5252 0%, #26a69a 50%, #2196f3 100%);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Funky theme - keep default gradient styles */
+:global(.funky-theme) {
+  .new-words-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff5252 0%, #26a69a 50%, #2196f3 100%);
+    }
+  }
+}
+
+/* Solid theme - solid green button */
+:global(.solid-theme) {
+  .new-words-button {
+    background: #28a745;
+    border: 2px solid #1e7e34;
+
+    &:hover {
+      background: #1e7e34;
+      border-color: #155724;
+    }
+
+    &:active {
+      background: #155724;
+    }
+  }
+}
+
+.App-footer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.8));
+  padding: 20px;
+  margin-top: 40px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px 20px 0 0;
+
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    font-family: 'Comic Neue', cursive;
+    font-weight: 600;
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .app-title {
+    padding: 15px;
+
+    h1 {
+      font-size: 2.3rem;
+    }
+  }
+  
+  .learning-mode-header {
+    font-size: 2.3rem;
+  }
+  
+  .mode-dropdown-header {
+    font-size: 2.3rem;
+    padding: 6px 30px 6px 10px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1.3rem;
+    right: 10px;
+  }
+  
+  .App-main {
+    padding: 15px;
+  }
+  
+  .new-words-section {
+    margin: 25px 0 18px 0;
+  }
+  
+  .new-words-button {
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    min-width: 180px;
+  }
+  
+  .App-footer {
+    padding: 18px 15px;
+
+    p {
+      font-size: 1.05rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    padding: 12px;
+
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  .learning-mode-header {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .mode-dropdown-header {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+    padding: 5px 25px 5px 8px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1.1rem;
+    right: 8px;
+  }
+  
+  .App-main {
+    padding: 12px;
+  }
+  
+  .new-words-section {
+    margin: 20px 0 15px 0;
+  }
+  
+  .new-words-button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    min-width: 160px;
+  }
+  
+  .App-footer {
+    padding: 16px 12px;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+  
+  .audio-warning {
+    padding: 10px 15px;
+    margin: 12px auto 15px auto;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-title h1 {
+    font-size: 1.8rem;
+  }
+  
+  .learning-mode-header {
+    font-size: 1.8rem;
+  }
+  
+  .mode-dropdown-header {
+    font-size: 1.8rem;
+    padding: 4px 22px 4px 6px;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1rem;
+    right: 6px;
+  }
+  
+  .new-words-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    min-width: 140px;
+  }
+}
+
+/* Touch device optimizations for new words button */
+@media (hover: none) and (pointer: coarse) {
+  .new-words-button:hover {
+    transform: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+  }
+  
+  .new-words-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.carousel-container {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-card {
+  position: absolute;
+  width: 80%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: all 0.5s ease;
+
+  &.current {
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  &.partial {
+    transform: scale(0.8);
+    z-index: 1;
+  }
+
+  &.hidden {
+    transform: scale(0.5);
+    z-index: 0;
+    opacity: 0;
+  }
+}
+
+.scroll-button {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+
+  &.up {
+    top: 10px;
+  }
+
+  &.down {
+    bottom: 10px;
+  }
+}
+
+.wheel-carousel {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wheel-card {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: all 0.5s ease;
+
+  &.current {
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  &.partial {
+    transform: scale(0.8);
+    z-index: 1;
+  }
+
+  &.hidden {
+    transform: scale(0.5);
+    z-index: 0;
+    opacity: 0;
+  }
+}
+
+.vertical-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.carousel-slide {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.current {
+    transform: scale(1.2);
+    opacity: 1;
+    z-index: 2;
+  }
+
+  &.partial {
+    transform: scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  &.hidden {
+    transform: scale(0.7);
+    opacity: 0;
+    z-index: 0;
+  }
+}
+
+/* Add shaking and swaying animation */
+@keyframes shake-sway {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}

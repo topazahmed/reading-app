@@ -1,5 +1,5 @@
 import React from 'react';
-import './WordCard.css';
+import './WordCard.scss';
 
 interface WordCardProps {
   word: string;

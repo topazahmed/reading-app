@@ -1,0 +1,97 @@
+.word-card {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  border: 3px solid #ffffff;
+  border-radius: 20px;
+  padding: 25px 20px;
+  margin: 16px 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  color: #4a4a4a;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  &.playing {
+    animation: bounce 0.8s ease-in-out;
+    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+    border-color: #e17055;
+  }
+}
+
+/* Funky theme - keep default styles */
+:global(.funky-theme) {
+  .word-card {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: 3px solid #ffffff;
+    color: #4a4a4a;
+
+    &.playing {
+      background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+      border-color: #e17055;
+    }
+  }
+
+  .letter-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #ff5252 0%, #26a69a 100%);
+    }
+
+    &.playing {
+      background: linear-gradient(135deg, #fdcb6e 0%, #fd79a8 100%);
+    }
+  }
+}
+
+/* Solid theme - blue cards, red letters with white text */
+:global(.solid-theme) {
+  .word-card {
+    background: blue;
+    border: 3px solid #0056b3;
+    color: white;
+
+    &.playing {
+      background: #0056b3;
+      border-color: #003d82;
+    }
+  }
+
+  .letter-button {
+    background: red;
+    color: white;
+    border: 2px solid #cc0000;
+
+    &:hover {
+      background: #cc0000;
+    }
+
+    &.playing {
+      background: #cc0000;
+      border-color: #990000;
+    }
+  }
+}
+
+.letters-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.letter-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: calc((100% - 32px) / var(--letter-count));
+}

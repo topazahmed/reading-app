@@ -1,5 +1,5 @@
 import React from 'react';
-import './MathSelector.css';
+import './MathSelector.scss';
 
 export type MathDifficulty = 'easy' | 'normal' | 'hard' | 'master';
 export type MathOperation = '+' | '-' | '×' | '÷' | 'all';

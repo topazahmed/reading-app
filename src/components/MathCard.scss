@@ -1,0 +1,300 @@
+.math-card {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  border: 3px solid #ffffff;
+  border-radius: 20px;
+  padding: 25px 20px;
+  margin: 16px 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  color: #4a4a4a;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.math-problem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 2rem;
+  font-family: 'Comic Neue', cursive;
+  flex-wrap: wrap;
+}
+
+.number-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 25px;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 80px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ff5252 0%, #26a69a 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.operation-symbol {
+  font-size: 2.5rem;
+  color: #ff6b6b;
+  font-weight: 700;
+}
+
+.equals-symbol {
+  font-size: 2rem;
+  color: #4a4a4a;
+  font-weight: 700;
+}
+
+.answer-section {
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answer-button {
+  background: linear-gradient(135deg, #ffa726 0%, #42a5f5 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 25px;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 80px;
+
+  &.solved {
+    animation: bounce 0.6s ease-in-out;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ff9800 0%, #2196f3 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.question-mark {
+  font-size: 3rem;
+  color: #fd79a8;
+  font-weight: 700;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.solve-button {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Comic Neue', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #218838 0%, #17a589 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Funky theme - keep default styles */
+:global(.funky-theme) {
+  .math-card {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: 3px solid #ffffff;
+    color: #4a4a4a;
+  }
+
+  .number-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff5252 0%, #26a69a 100%);
+    }
+  }
+
+  .answer-button {
+    background: linear-gradient(135deg, #ffa726 0%, #42a5f5 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff9800 0%, #2196f3 100%);
+    }
+  }
+
+  .solve-button {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #218838 0%, #17a589 100%);
+    }
+  }
+}
+
+/* Solid theme - solid colors */
+:global(.solid-theme) {
+  .math-card {
+    background: #ffc107;
+    border: 3px solid #e0a800;
+    color: #212529;
+  }
+
+  .number-button {
+    background: #007bff;
+    border: 2px solid #0056b3;
+
+    &:hover {
+      background: #0056b3;
+    }
+  }
+
+  .operation-symbol {
+    color: #007bff;
+  }
+
+  .answer-button {
+    background: #28a745;
+    border: 2px solid #1e7e34;
+
+    &:hover {
+      background: #1e7e34;
+    }
+  }
+
+  .question-mark {
+    color: #007bff;
+  }
+
+  .solve-button {
+    background: #28a745;
+    border: 2px solid #1e7e34;
+
+    &:hover {
+      background: #1e7e34;
+    }
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .math-problem {
+    font-size: 1.6rem;
+    gap: 8px;
+  }
+
+  .number-button {
+    padding: 12px 20px;
+    font-size: 1.6rem;
+    min-width: 60px;
+  }
+
+  .operation-symbol {
+    font-size: 2rem;
+  }
+
+  .equals-symbol {
+    font-size: 1.6rem;
+  }
+
+  .answer-button {
+    padding: 12px 20px;
+    font-size: 1.6rem;
+    min-width: 60px;
+  }
+
+  .question-mark {
+    font-size: 2.5rem;
+  }
+
+  .solve-button {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .math-problem {
+    font-size: 1.4rem;
+    gap: 6px;
+  }
+
+  .number-button {
+    padding: 10px 16px;
+    font-size: 1.4rem;
+    min-width: 50px;
+  }
+
+  .operation-symbol {
+    font-size: 1.8rem;
+  }
+
+  .equals-symbol {
+    font-size: 1.4rem;
+  }
+
+  .answer-button {
+    padding: 10px 16px;
+    font-size: 1.4rem;
+    min-width: 50px;
+  }
+
+  .question-mark {
+    font-size: 2rem;
+  }
+
+  .solve-button {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
