@@ -47,7 +47,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 # Topaz's TODO
-- jokes
+- jokes                 
 - namta
 - quiz
 - common knowledge
@@ -63,3 +63,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - cartoons characters
 - day                   X
 - date                  X
+- update speeach speed
+- move speech to settings

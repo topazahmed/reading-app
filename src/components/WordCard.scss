@@ -43,6 +43,11 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding: 20px 8px;
+    font-family: 'Fredoka One', cursive;
+    text-transform: uppercase;
   }
 
   .word-speak-button {
@@ -51,8 +56,8 @@
     border: 2px solid #ffffff;
     border-radius: 12px;
     padding: 12px 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -60,6 +65,7 @@
     justify-content: center;
     gap: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Comic Neue', cursive;
 
     &:hover {
       transform: scale(1.05);
@@ -71,11 +77,12 @@
     }
 
     .speaker-icon {
-      font-size: 1.3rem;
+      font-size: 2rem;
     }
 
     .speak-text {
-      font-size: 1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
     }
   }
 }
@@ -173,20 +180,20 @@
     .letter-button {
       width: calc((100% - ((var(--letter-count) - 1) * 2px)) / var(--letter-count));
       border-radius: 8px;
-      font-size: 0.9rem;
-      padding: 8px 4px;
+      font-size: 2rem;
+      padding: 15px 4px;
     }
 
     .word-speak-button {
       padding: 10px 15px;
-      font-size: 1rem;
+      font-size: 1.3rem;
 
       .speaker-icon {
-        font-size: 1.1rem;
+        font-size: 1.7rem;
       }
 
       .speak-text {
-        font-size: 0.9rem;
+        font-size: 1.3rem;
       }
     }
   }
@@ -204,20 +211,20 @@
     .letter-button {
       width: calc((100% - ((var(--letter-count) - 1) * 2px)) / var(--letter-count));
       border-radius: 6px;
-      font-size: 0.85rem;
-      padding: 6px 2px;
+      font-size: 1.8rem;
+      padding: 12px 2px;
     }
 
     .word-speak-button {
       padding: 8px 12px;
-      font-size: 0.95rem;
+      font-size: 1.2rem;
 
       .speaker-icon {
-        font-size: 1rem;
+        font-size: 1.5rem;
       }
 
       .speak-text {
-        font-size: 0.85rem;
+        font-size: 1.2rem;
       }
     }
   }

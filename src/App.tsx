@@ -60,6 +60,12 @@ function App() {
   // Theme state
   const [theme, setTheme] = useState<'funky' | 'solid'>('funky');
 
+  // Voice preference state
+  const [voicePreference, setVoicePreference] = useState<'mom' | 'dad'>(() => {
+    const savedVoice = localStorage.getItem('voicePreference');
+    return (savedVoice === 'dad' || savedVoice === 'mom') ? savedVoice : 'mom';
+  });
+
   // Module menu state
   const [isModuleMenuOpen, setIsModuleMenuOpen] = useState(false);
 
@@ -72,7 +78,7 @@ function App() {
     if (isModalOpen) {
       const message = "Hello friend, I am Mr. Pintu Pant. Thanks for learning with me.";
       const utterance = new SpeechSynthesisUtterance(message);
-      utterance.rate = 0.9;
+      utterance.rate = 0.7;
       utterance.pitch = 1.1;
       window.speechSynthesis.speak(utterance);
     }
@@ -299,6 +305,11 @@ function App() {
     if (themeLink) {
       themeLink.href = newTheme === 'funky' ? '/funky-theme.css' : '/solid-theme.css';
     }
+  };
+
+  const handleVoiceChange = (newVoice: 'mom' | 'dad') => {
+    setVoicePreference(newVoice);
+    localStorage.setItem('voicePreference', newVoice);
   };
 
   const months = [
@@ -730,6 +741,52 @@ function App() {
                     style={{ marginRight: '8px', cursor: 'pointer' }}
                   />
                   <span style={{ fontSize: '1rem', color: '#333' }}>🎯 Solid Colors</span>
+                </label>
+
+                <hr style={{
+                  margin: '20px 0',
+                  border: 'none',
+                  borderTop: '1px solid #e0e0e0',
+                }} />
+
+                <p style={{
+                  margin: '0 0 10px 0',
+                  fontSize: '1rem',
+                  color: '#555',
+                  fontWeight: 'bold',
+                }}>
+                  Voice:
+                </p>
+                <label style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  marginRight: '20px',
+                }}>
+                  <input
+                    type="radio"
+                    name="voice"
+                    value="mom"
+                    checked={voicePreference === 'mom'}
+                    onChange={() => handleVoiceChange('mom')}
+                    style={{ marginRight: '8px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '1rem', color: '#333' }}>👩 Mom</span>
+                </label>
+                <label style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}>
+                  <input
+                    type="radio"
+                    name="voice"
+                    value="dad"
+                    checked={voicePreference === 'dad'}
+                    onChange={() => handleVoiceChange('dad')}
+                    style={{ marginRight: '8px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '1rem', color: '#333' }}>👨 Dad</span>
                 </label>
               </div>
             </div>

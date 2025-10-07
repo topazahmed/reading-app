@@ -73,26 +73,33 @@ export const generateMathProblems = (
   return problems;
 };
 
-// Speak a number using text-to-speech
-export const speakNumber = (number: number): void => {
-  if ('speechSynthesis' in window) {
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(number.toString());
-    
-    // Configure speech settings
-    utterance.rate = 0.5; // Same speed as letters and words
-    utterance.pitch = 1.0;
-    utterance.volume = 1.0;
-    
-    // Try to use a kids/children's voice first, then female voice
-    const voices = window.speechSynthesis.getVoices();
-    const kidsVoice = voices.find(voice => 
+// Helper function to get voice preference from localStorage
+const getVoicePreference = (): 'mom' | 'dad' => {
+  const savedVoice = localStorage.getItem('voicePreference');
+  return (savedVoice === 'dad' || savedVoice === 'mom') ? savedVoice : 'mom';
+};
+
+// Helper function to select appropriate voice based on preference
+const selectVoice = (voices: SpeechSynthesisVoice[], preference: 'mom' | 'dad'): SpeechSynthesisVoice | undefined => {
+  if (preference === 'dad') {
+    // Male voice selection
+    return voices.find(voice => 
+      voice.lang.includes('en') && (
+        voice.name.toLowerCase().includes('male') ||
+        voice.name.toLowerCase().includes('man') ||
+        voice.name.toLowerCase().includes('david') ||
+        voice.name.toLowerCase().includes('james') ||
+        voice.name.toLowerCase().includes('daniel') ||
+        voice.name.toLowerCase().includes('alex') ||
+        voice.name.toLowerCase().includes('tom')
+      )
+    ) || voices.find(voice => voice.lang.includes('en') && !voice.name.toLowerCase().includes('female'));
+  } else {
+    // Female voice selection (mom)
+    return voices.find(voice => 
       voice.lang.includes('en') && (
         voice.name.toLowerCase().includes('child') ||
         voice.name.toLowerCase().includes('kids') ||
-        voice.name.toLowerCase().includes('boy') ||
         voice.name.toLowerCase().includes('girl') ||
         voice.name.toLowerCase().includes('junior') ||
         voice.name.toLowerCase().includes('young')
@@ -108,9 +115,29 @@ export const speakNumber = (number: number): void => {
         voice.name.toLowerCase().includes('serena')
       )
     ) || voices.find(voice => voice.lang.includes('en'));
+  }
+};
+
+// Speak a number using text-to-speech
+export const speakNumber = (number: number): void => {
+  if ('speechSynthesis' in window) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
     
-    if (kidsVoice) {
-      utterance.voice = kidsVoice;
+    const utterance = new SpeechSynthesisUtterance(number.toString());
+    
+    // Configure speech settings
+    utterance.rate = 0.7; // Same speed as letters and words
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    
+    // Get voice preference and select appropriate voice
+    const voices = window.speechSynthesis.getVoices();
+    const preference = getVoicePreference();
+    const selectedVoice = selectVoice(voices, preference);
+    
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
     
     window.speechSynthesis.speak(utterance);
@@ -136,35 +163,17 @@ export const speakMathSolution = (problem: MathProblem): void => {
     const utterance = new SpeechSynthesisUtterance(solutionText);
     
     // Configure speech settings
-    utterance.rate = 0.5;
+    utterance.rate = 0.7;
     utterance.pitch = 1.0;
     utterance.volume = 1.0;
     
-    // Use same voice selection as speakNumber
+    // Get voice preference and select appropriate voice
     const voices = window.speechSynthesis.getVoices();
-    const kidsVoice = voices.find(voice => 
-      voice.lang.includes('en') && (
-        voice.name.toLowerCase().includes('child') ||
-        voice.name.toLowerCase().includes('kids') ||
-        voice.name.toLowerCase().includes('boy') ||
-        voice.name.toLowerCase().includes('girl') ||
-        voice.name.toLowerCase().includes('junior') ||
-        voice.name.toLowerCase().includes('young')
-      )
-    ) || voices.find(voice => 
-      voice.lang.includes('en') && (
-        voice.name.toLowerCase().includes('female') ||
-        voice.name.toLowerCase().includes('woman') ||
-        voice.name.toLowerCase().includes('samantha') ||
-        voice.name.toLowerCase().includes('susan') ||
-        voice.name.toLowerCase().includes('karen') ||
-        voice.name.toLowerCase().includes('tessa') ||
-        voice.name.toLowerCase().includes('serena')
-      )
-    ) || voices.find(voice => voice.lang.includes('en'));
+    const preference = getVoicePreference();
+    const selectedVoice = selectVoice(voices, preference);
     
-    if (kidsVoice) {
-      utterance.voice = kidsVoice;
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
     
     window.speechSynthesis.speak(utterance);
