@@ -48,7 +48,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # Topaz's TODO
 - jokes                 
-- namta
+- namta                 x
 - quiz
 - common knowledge
 - animals
