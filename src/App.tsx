@@ -24,13 +24,14 @@ import RoadSignsLearningModule from "./components/RoadSignsLearningModule";
 import CountriesLearningModule from "./components/CountriesLearningModule";
 import BooksLearningModule from "./components/BooksPage";
 import TimesTableModule from "./components/TimesTableModule";
+import AlphabetModule from "./components/AlphabetModule";
 
 function App() {
   // Mode state - Initialize from localStorage or default to 'words'
-  type ModeType = 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books' | 'times-table';
+  type ModeType = 'words' | 'math' | 'month' | 'days' | 'time' | 'cars' | 'road-signs' | 'countries' | 'books' | 'times-table' | 'alphabet';
   const [currentMode, setCurrentMode] = useState<ModeType>(() => {
     const savedMode = localStorage.getItem('learningMode');
-    if (savedMode && ['words', 'math', 'month', 'days', 'time', 'cars', 'road-signs', 'countries', 'books', 'times-table'].includes(savedMode)) {
+    if (savedMode && ['words', 'math', 'month', 'days', 'time', 'cars', 'road-signs', 'countries', 'books', 'times-table', 'alphabet'].includes(savedMode)) {
       return savedMode as ModeType;
     }
     return 'words';
@@ -99,6 +100,7 @@ function App() {
         'countries': 'countries',
         'books': 'books',
         'times-table': 'times-table',
+        'alphabet': 'alphabet',
         '': 'words'
       };
       
@@ -139,6 +141,7 @@ function App() {
       'countries': 'countries',
       'books': 'books',
       'times-table': 'times-table',
+      'alphabet': 'alphabet',
       'words': ''
     };
     
@@ -592,6 +595,8 @@ function App() {
           <BooksLearningModule />
         ) : currentMode === "times-table" ? (
           <TimesTableModule />
+        ) : currentMode === "alphabet" ? (
+          <AlphabetModule />
         ) : (
           <TimeLearningModule />
         )}
@@ -866,6 +871,7 @@ function App() {
               { mode: 'countries' as const, icon: '🌍', label: 'Countries', color: '#ffd89b' },
               { mode: 'books' as const, icon: '📚', label: 'My Books', color: '#c471f5' },
               { mode: 'times-table' as const, icon: '✖️', label: 'Times Table', color: '#ff6b9d' },
+              { mode: 'alphabet' as const, icon: '🔤', label: 'Alphabet', color: '#6366f1' },
             ].map((module) => (
               <button
                 key={module.mode}
