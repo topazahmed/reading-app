@@ -5,6 +5,7 @@ interface AlphabetData {
   letter: string;
   word: string;
   image: string;
+  sound?: string; // Optional native pronunciation
 }
 
 type Language = 'english' | 'bangla' | 'arabic';
@@ -39,86 +40,86 @@ const alphabetDataByLanguage: { [key in Language]: AlphabetData[] } = {
     { letter: 'Z', word: 'Zebra', image: '🦓' },
   ],
   bangla: [
-    { letter: 'অ', word: 'আম', image: '🥭' }, // Mango
-    { letter: 'আ', word: 'আনারস', image: '🍍' }, // Pineapple
-    { letter: 'ই', word: 'ইঁদুর', image: '🐭' }, // Mouse
-    { letter: 'ঈ', word: 'ঈগল', image: '🦅' }, // Eagle
-    { letter: 'উ', word: 'উট', image: '🐪' }, // Camel
-    { letter: 'ঊ', word: 'ঊষা', image: '🌅' }, // Dawn
-    { letter: 'ঋ', word: 'ঋষি', image: '🧙‍♂️' }, // Sage
-    { letter: 'এ', word: 'এলাচ', image: '🌿' }, // Cardamom
-    { letter: 'ঐ', word: 'ঐরাবত', image: '🐘' }, // Elephant
-    { letter: 'ও', word: 'ওল', image: '🍠' }, // Yam
-    { letter: 'ঔ', word: 'ঔষধ', image: '💊' }, // Medicine
-    { letter: 'ক', word: 'কলা', image: '🍌' }, // Banana
-    { letter: 'খ', word: 'খরগোশ', image: '🐰' }, // Rabbit
-    { letter: 'গ', word: 'গরু', image: '🐄' }, // Cow
-    { letter: 'ঘ', word: 'ঘর', image: '🏠' }, // House
-    { letter: 'ঙ', word: 'ঙ্গন', image: '🏞️' }, // Courtyard
-    { letter: 'চ', word: 'চাঁদ', image: '🌙' }, // Moon
-    { letter: 'ছ', word: 'ছাগল', image: '🐐' }, // Goat
-    { letter: 'জ', word: 'জাহাজ', image: '🚢' }, // Ship
-    { letter: 'ঝ', word: 'ঝরনা', image: '💧' }, // Waterfall
-    { letter: 'ঞ', word: 'ঞ্জন', image: '🔥' }, // Fire
-    { letter: 'ট', word: 'টমেটো', image: '🍅' }, // Tomato
-    { letter: 'ঠ', word: 'ঠোঁট', image: '👄' }, // Lips
-    { letter: 'ড', word: 'ডিম', image: '🥚' }, // Egg
-    { letter: 'ঢ', word: 'ঢোল', image: '🥁' }, // Drum
-    { letter: 'ণ', word: 'ণত্ব', image: '📚' }, // Knowledge
-    { letter: 'ত', word: 'তারা', image: '⭐' }, // Star
-    { letter: 'থ', word: 'থালা', image: '🍽️' }, // Plate
-    { letter: 'দ', word: 'দাঁত', image: '🦷' }, // Tooth
-    { letter: 'ধ', word: 'ধান', image: '🌾' }, // Rice
-    { letter: 'ন', word: 'নৌকা', image: '⛵' }, // Boat
-    { letter: 'প', word: 'পাখি', image: '🐦' }, // Bird
-    { letter: 'ফ', word: 'ফুল', image: '🌸' }, // Flower
-    { letter: 'ব', word: 'বই', image: '📖' }, // Book
-    { letter: 'ভ', word: 'ভালুক', image: '🐻' }, // Bear
-    { letter: 'ম', word: 'মাছ', image: '🐟' }, // Fish
-    { letter: 'য', word: 'যন্ত্র', image: '⚙️' }, // Machine
-    { letter: 'র', word: 'রকেট', image: '🚀' }, // Rocket
-    { letter: 'ল', word: 'লেবু', image: '🍋' }, // Lemon
-    { letter: 'শ', word: 'শিশু', image: '👶' }, // Baby
-    { letter: 'ষ', word: 'ষাঁড়', image: '🐂' }, // Bull
-    { letter: 'স', word: 'সূর্য', image: '☀️' }, // Sun
-    { letter: 'হ', word: 'হাতি', image: '🐘' }, // Elephant
-    { letter: 'ড়', word: 'ড়িম', image: '🥚' }, // Egg
-    { letter: 'ঢ়', word: 'ঢ়াক', image: '🥁' }, // Drum
-    { letter: 'য়', word: 'য়াক', image: '🦌' }, // Yak
-    { letter: 'ৎ', word: 'সৎ', image: '✨' }, // Good
-    { letter: 'ং', word: 'রং', image: '🎨' }, // Color
-    { letter: 'ঃ', word: 'দুঃখ', image: '😢' }, // Sadness
-    { letter: 'ঁ', word: 'চাঁদ', image: '🌙' }, // Moon
+    { letter: 'অ', word: 'আম', image: '🥭', sound: 'Shore O' }, // Mango
+    { letter: 'আ', word: 'আনারস', image: '🍍', sound: 'Shore AA' }, // Pineapple
+    { letter: 'ই', word: 'ইঁদুর', image: '🐭', sound: 'Hrosho I' }, // Mouse
+    { letter: 'ঈ', word: 'ঈগল', image: '🦅', sound: 'Dirgho EE' }, // Eagle
+    { letter: 'উ', word: 'উট', image: '🐪', sound: 'Hrosho U' }, // Camel
+    { letter: 'ঊ', word: 'ঊষা', image: '🌅', sound: 'Dirgho UU' }, // Dawn
+    { letter: 'ঋ', word: 'ঋষি', image: '🧙‍♂️', sound: 'Ri' }, // Sage
+    { letter: 'এ', word: 'এলাচ', image: '🌿', sound: 'E' }, // Cardamom
+    { letter: 'ঐ', word: 'ঐরাবত', image: '🐘', sound: 'Oi' }, // Elephant
+    { letter: 'ও', word: 'ওল', image: '🍠', sound: 'O' }, // Yam
+    { letter: 'ঔ', word: 'ঔষধ', image: '💊', sound: 'Ou' }, // Medicine
+    { letter: 'ক', word: 'কলা', image: '🍌', sound: 'Ko' }, // Banana
+    { letter: 'খ', word: 'খরগোশ', image: '🐰', sound: 'Kho' }, // Rabbit
+    { letter: 'গ', word: 'গরু', image: '🐄', sound: 'Go' }, // Cow
+    { letter: 'ঘ', word: 'ঘর', image: '🏠', sound: 'Gho' }, // House
+    { letter: 'ঙ', word: 'ঙ্গন', image: '🏞️', sound: 'Umo' }, // Courtyard
+    { letter: 'চ', word: 'চাঁদ', image: '🌙', sound: 'Cho' }, // Moon
+    { letter: 'ছ', word: 'ছাগল', image: '🐐', sound: 'Chho' }, // Goat
+    { letter: 'জ', word: 'জাহাজ', image: '🚢', sound: 'Jo' }, // Ship
+    { letter: 'ঝ', word: 'ঝরনা', image: '💧', sound: 'Jho' }, // Waterfall
+    { letter: 'ঞ', word: 'ঞ্জন', image: '🔥', sound: 'Ino' }, // Fire
+    { letter: 'ট', word: 'টমেটো', image: '🍅', sound: 'To' }, // Tomato
+    { letter: 'ঠ', word: 'ঠোঁট', image: '👄', sound: 'Tho' }, // Lips
+    { letter: 'ড', word: 'ডিম', image: '🥚', sound: 'Do' }, // Egg
+    { letter: 'ঢ', word: 'ঢোল', image: '🥁', sound: 'Dho' }, // Drum
+    { letter: 'ণ', word: 'ণত্ব', image: '📚', sound: 'Murdhonno No' }, // Knowledge
+    { letter: 'ত', word: 'তারা', image: '⭐', sound: 'Donto To' }, // Star
+    { letter: 'থ', word: 'থালা', image: '🍽️', sound: 'Donto Tho' }, // Plate
+    { letter: 'দ', word: 'দাঁত', image: '🦷', sound: 'Donto Do' }, // Tooth
+    { letter: 'ধ', word: 'ধান', image: '🌾', sound: 'Donto Dho' }, // Rice
+    { letter: 'ন', word: 'নৌকা', image: '⛵', sound: 'Donto No' }, // Boat
+    { letter: 'প', word: 'পাখি', image: '🐦', sound: 'Po' }, // Bird
+    { letter: 'ফ', word: 'ফুল', image: '🌸', sound: 'Fo' }, // Flower
+    { letter: 'ব', word: 'বই', image: '📖', sound: 'Bo' }, // Book
+    { letter: 'ভ', word: 'ভালুক', image: '🐻', sound: 'Bho' }, // Bear
+    { letter: 'ম', word: 'মাছ', image: '🐟', sound: 'Mo' }, // Fish
+    { letter: 'য', word: 'যন্ত্র', image: '⚙️', sound: 'Ontoshto Jo' }, // Machine
+    { letter: 'র', word: 'রকেট', image: '🚀', sound: 'Ro' }, // Rocket
+    { letter: 'ল', word: 'লেবু', image: '🍋', sound: 'Lo' }, // Lemon
+    { letter: 'শ', word: 'শিশু', image: '👶', sound: 'Tali Sho' }, // Baby
+    { letter: 'ষ', word: 'ষাঁড়', image: '🐂', sound: 'Murdhonno Sho' }, // Bull
+    { letter: 'স', word: 'সূর্য', image: '☀️', sound: 'Donto Sho' }, // Sun
+    { letter: 'হ', word: 'হাতি', image: '🐘', sound: 'Ho' }, // Elephant
+    { letter: 'ড়', word: 'ড়িম', image: '🥚', sound: 'Ro' }, // Egg
+    { letter: 'ঢ়', word: 'ঢ়াক', image: '🥁', sound: 'Rho' }, // Drum
+    { letter: 'য়', word: 'য়াক', image: '🦌', sound: 'Ontoshto Yo' }, // Yak
+    { letter: 'ৎ', word: 'সৎ', image: '✨', sound: 'Khondo To' }, // Good
+    { letter: 'ং', word: 'রং', image: '🎨', sound: 'Anuswar' }, // Color
+    { letter: 'ঃ', word: 'দুঃখ', image: '😢', sound: 'Bishargo' }, // Sadness
+    { letter: 'ঁ', word: 'চাঁদ', image: '🌙', sound: 'Chondrobindu' }, // Moon
   ],
   arabic: [
-    { letter: 'ا', word: 'أسد', image: '🦁' }, // Lion (Asad)
-    { letter: 'ب', word: 'بطة', image: '🦆' }, // Duck (Batta)
-    { letter: 'ت', word: 'تفاح', image: '🍎' }, // Apple (Tuffah)
-    { letter: 'ث', word: 'ثعلب', image: '🦊' }, // Fox (Tha'lab)
-    { letter: 'ج', word: 'جمل', image: '🐪' }, // Camel (Jamal)
-    { letter: 'ح', word: 'حوت', image: '🐋' }, // Whale (Hoot)
-    { letter: 'خ', word: 'خروف', image: '🐑' }, // Sheep (Kharoof)
-    { letter: 'د', word: 'دب', image: '🐻' }, // Bear (Dubb)
-    { letter: 'ذ', word: 'ذئب', image: '🐺' }, // Wolf (Dhi'b)
-    { letter: 'ر', word: 'رمان', image: '🍎' }, // Pomegranate (Rumman)
-    { letter: 'ز', word: 'زرافة', image: '🦒' }, // Giraffe (Zarafa)
-    { letter: 'س', word: 'سمك', image: '🐟' }, // Fish (Samak)
-    { letter: 'ش', word: 'شمس', image: '☀️' }, // Sun (Shams)
-    { letter: 'ص', word: 'صقر', image: '🦅' }, // Falcon (Saqr)
-    { letter: 'ض', word: 'ضفدع', image: '🐸' }, // Frog (Difda')
-    { letter: 'ط', word: 'طائر', image: '🐦' }, // Bird (Ta'ir)
-    { letter: 'ظ', word: 'ظبي', image: '🦌' }, // Deer (Dhabi)
-    { letter: 'ع', word: 'عصفور', image: '🐦' }, // Sparrow (Usfoor)
-    { letter: 'غ', word: 'غزال', image: '🦌' }, // Gazelle (Ghazal)
-    { letter: 'ف', word: 'فيل', image: '🐘' }, // Elephant (Feel)
-    { letter: 'ق', word: 'قط', image: '🐱' }, // Cat (Qitt)
-    { letter: 'ك', word: 'كلب', image: '🐶' }, // Dog (Kalb)
-    { letter: 'ل', word: 'ليمون', image: '🍋' }, // Lemon (Laymoon)
-    { letter: 'م', word: 'موز', image: '🍌' }, // Banana (Mooz)
-    { letter: 'ن', word: 'نحلة', image: '🐝' }, // Bee (Nahla)
-    { letter: 'ه', word: 'هدهد', image: '🐦' }, // Hoopoe (Hudhud)
-    { letter: 'و', word: 'وردة', image: '🌹' }, // Rose (Warda)
-    { letter: 'ي', word: 'يد', image: '✋' }, // Hand (Yad)
+    { letter: 'ا', word: 'أسد', image: '🦁', sound: 'Alif' }, // Lion (Asad)
+    { letter: 'ب', word: 'بطة', image: '🦆', sound: 'Baa' }, // Duck (Batta)
+    { letter: 'ت', word: 'تفاح', image: '🍎', sound: 'Taa' }, // Apple (Tuffah)
+    { letter: 'ث', word: 'ثعلب', image: '🦊', sound: 'Thaa' }, // Fox (Tha'lab)
+    { letter: 'ج', word: 'جمل', image: '🐪', sound: 'Jeem' }, // Camel (Jamal)
+    { letter: 'ح', word: 'حوت', image: '🐋', sound: 'Haa' }, // Whale (Hoot)
+    { letter: 'خ', word: 'خروف', image: '🐑', sound: 'Khaa' }, // Sheep (Kharoof)
+    { letter: 'د', word: 'دب', image: '🐻', sound: 'Daal' }, // Bear (Dubb)
+    { letter: 'ذ', word: 'ذئب', image: '🐺', sound: 'Dhaal' }, // Wolf (Dhi'b)
+    { letter: 'ر', word: 'رمان', image: '🍎', sound: 'Raa' }, // Pomegranate (Rumman)
+    { letter: 'ز', word: 'زرافة', image: '🦒', sound: 'Zaay' }, // Giraffe (Zarafa)
+    { letter: 'س', word: 'سمك', image: '🐟', sound: 'Seen' }, // Fish (Samak)
+    { letter: 'ش', word: 'شمس', image: '☀️', sound: 'Sheen' }, // Sun (Shams)
+    { letter: 'ص', word: 'صقر', image: '🦅', sound: 'Saad' }, // Falcon (Saqr)
+    { letter: 'ض', word: 'ضفدع', image: '🐸', sound: 'Daad' }, // Frog (Difda')
+    { letter: 'ط', word: 'طائر', image: '🐦', sound: 'Taa' }, // Bird (Ta'ir)
+    { letter: 'ظ', word: 'ظبي', image: '🦌', sound: 'Dhaa' }, // Deer (Dhabi)
+    { letter: 'ع', word: 'عصفور', image: '🐦', sound: 'Ayn' }, // Sparrow (Usfoor)
+    { letter: 'غ', word: 'غزال', image: '🦌', sound: 'Ghayn' }, // Gazelle (Ghazal)
+    { letter: 'ف', word: 'فيل', image: '🐘', sound: 'Faa' }, // Elephant (Feel)
+    { letter: 'ق', word: 'قط', image: '🐱', sound: 'Qaaf' }, // Cat (Qitt)
+    { letter: 'ك', word: 'كلب', image: '🐶', sound: 'Kaaf' }, // Dog (Kalb)
+    { letter: 'ل', word: 'ليمون', image: '🍋', sound: 'Laam' }, // Lemon (Laymoon)
+    { letter: 'م', word: 'موز', image: '🍌', sound: 'Meem' }, // Banana (Mooz)
+    { letter: 'ن', word: 'نحلة', image: '🐝', sound: 'Noon' }, // Bee (Nahla)
+    { letter: 'ه', word: 'هدهد', image: '🐦', sound: 'Haa' }, // Hoopoe (Hudhud)
+    { letter: 'و', word: 'وردة', image: '🌹', sound: 'Waaw' }, // Rose (Warda)
+    { letter: 'ي', word: 'يد', image: '✋', sound: 'Yaa' }, // Hand (Yad)
   ]
 };
 
@@ -269,7 +270,15 @@ const AlphabetModule: React.FC = () => {
   }, [checkAnswer]);
 
   const speakLetter = (letter: string) => {
-    speakText(`The letter ${letter}`);
+    const currentLetterData = currentAlphabetData.find(item => item.letter === letter);
+    
+    if (currentLetterData?.sound && (currentLanguage === 'bangla' || currentLanguage === 'arabic')) {
+      // Use native pronunciation for Bangla and Arabic
+      speakText(currentLetterData.sound);
+    } else {
+      // Use English format for English letters
+      speakText(`The letter ${letter}`);
+    }
   };
 
   const speakWord = (word: string) => {
@@ -277,7 +286,16 @@ const AlphabetModule: React.FC = () => {
   };
 
   const speakLetterAndWord = (letter: string, word: string) => {
-    speakText(`${letter} for ${word}`);
+    const currentLetterData = currentAlphabetData.find(item => item.letter === letter);
+    
+    if (currentLetterData?.sound && (currentLanguage === 'bangla' || currentLanguage === 'arabic')) {
+      // Use native pronunciation for Bangla and Arabic
+      const forText = currentLanguage === 'bangla' ? 'দিয়ে' : 'لـ';
+      speakText(`${currentLetterData.sound} ${forText} ${word}`);
+    } else {
+      // Use English format
+      speakText(`${letter} for ${word}`);
+    }
   };
 
   const startListening = () => {
